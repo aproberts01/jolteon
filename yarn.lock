@@ -555,6 +555,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-react@npm:^3.31.0":
+  version: 3.31.0
+  resolution: "@tabler/icons-react@npm:3.31.0"
+  dependencies:
+    "@tabler/icons": "npm:3.31.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/aceefe1b6c12a2e64921900f49c09c0c24bcd837dfb3d4274914065e33a5175944f1e25ce9a80d110272e5ae0fefc24062a38f1ec75a4ec79c63d40acb9d1d12
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.31.0":
+  version: 3.31.0
+  resolution: "@tabler/icons@npm:3.31.0"
+  checksum: 10c0/03fcfff0b705e1474030acee2ff0523bfa1fda7a29a33d031a9fd8e3b52ecc2e0380f9cf5e81bd054b30dc0acdb819b1e08ab746805be8d660934a08b2c3545e
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:^1.0.6":
   version: 1.0.6
   resolution: "@types/estree@npm:1.0.6"
@@ -2974,6 +2992,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jolty@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "jolty@workspace:."
+  dependencies:
+    "@mantine/core": "npm:7.16.1"
+    "@mantine/hooks": "npm:7.16.1"
+    "@tabler/icons-react": "npm:^3.31.0"
+    "@types/node": "npm:22.10.7"
+    "@types/react": "npm:19.0.7"
+    "@types/react-dom": "npm:19.0.3"
+    eslint: "npm:9.18.0"
+    eslint-config-next: "npm:15.1.5"
+    next: "npm:15.1.5"
+    postcss: "npm:^8.5.1"
+    postcss-preset-mantine: "npm:1.17.0"
+    postcss-simple-vars: "npm:^7.0.1"
+    react: "npm:19.0.0"
+    react-dom: "npm:19.0.0"
+    typescript: "npm:5.7.3"
+  languageName: unknown
+  linkType: soft
+
 "js-tokens@npm:^3.0.0 || ^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -3107,27 +3147,6 @@ __metadata:
   checksum: 10c0/655d110220983c1a4b9c0c679a2e8016d4b67f6e9c7b5435ff5979ecdb20d0813f4dec0a08674fcbdd4846a3f07edbb50a36811fd37930b94aaa0d9daceb017e
   languageName: node
   linkType: hard
-
-"mantine-minimal-next-template@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "mantine-minimal-next-template@workspace:."
-  dependencies:
-    "@mantine/core": "npm:7.16.1"
-    "@mantine/hooks": "npm:7.16.1"
-    "@types/node": "npm:22.10.7"
-    "@types/react": "npm:19.0.7"
-    "@types/react-dom": "npm:19.0.3"
-    eslint: "npm:9.18.0"
-    eslint-config-next: "npm:15.1.5"
-    next: "npm:15.1.5"
-    postcss: "npm:^8.5.1"
-    postcss-preset-mantine: "npm:1.17.0"
-    postcss-simple-vars: "npm:^7.0.1"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
-    typescript: "npm:5.7.3"
-  languageName: unknown
-  linkType: soft
 
 "math-intrinsics@npm:^1.1.0":
   version: 1.1.0

@@ -1,0 +1,80 @@
+{
+    "list": {
+      "list_id": 1,
+      "list_title": "Placeholder Title",
+      "creationDate": "1980-01-02T00:00:00.000Z",
+      "registered": true,
+      "tiles": [
+        {
+          "tileId": 1,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 2,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 3,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 4,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 5,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 6,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 7,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 8,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 9,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        },
+        {
+          "tileId": 10,
+          "tileType": "ranking",
+          "imageUrl": "/image.png",
+          "headline": "Headline",
+          "subHeadline": "Subheadline"
+        }
+      ]
+    }
+  }

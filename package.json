@@ -1,5 +1,5 @@
 {
-  "name": "mantine-minimal-next-template",
+  "name": "jolty",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "@mantine/core": "7.16.1",
     "@mantine/hooks": "7.16.1",
+    "@tabler/icons-react": "^3.31.0",
     "next": "15.1.5",
     "react": "19.0.0",
     "react-dom": "19.0.0"
