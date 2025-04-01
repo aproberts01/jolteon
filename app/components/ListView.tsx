@@ -2,14 +2,10 @@ import React from "react";
 import { Container } from "@mantine/core";
 import {
   ActionIcon,
-  Anchor,
-  Avatar,
-  Badge,
   Group,
   Table,
   Text,
   Title,
-  useMantineTheme
 } from "@mantine/core";
 import listData from "../data.json";
 import { IconTableShare, IconDeviceFloppy, IconHeart } from '@tabler/icons-react';
@@ -17,7 +13,6 @@ import { IconTableShare, IconDeviceFloppy, IconHeart } from '@tabler/icons-react
 interface Props {}
 
 const ListView: React.FC<Props> = () => {
-  const theme = useMantineTheme()
   const rows = listData.list.tiles.map((item, i) => (
     <Table.Tr key={item.tileId}>
       <Table.Td>

@@ -1,13 +1,9 @@
 "use client";
-import { useState } from "react";
-import { Code, Group, SimpleGrid, Avatar, Title, Tabs } from "@mantine/core";
+import { Group, Avatar, Tabs } from "@mantine/core";
 import classes from "./styles.module.css";
 import ListView from "./components/ListView";
-import { Container, Grid, Skeleton, Text, Card, Button, Badge } from "@mantine/core";
+import { Grid, Text, Card, Button, Badge } from "@mantine/core";
 import {
-  IconPhoto,
-  IconMessageCircle,
-  IconSettings,
   IconEdit,
   IconListNumbers
 } from "@tabler/icons-react";
