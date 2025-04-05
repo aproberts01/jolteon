@@ -1,34 +1,25 @@
 import React from "react";
 import { Container } from "@mantine/core";
+import { ActionIcon, Group, Table, Title } from "@mantine/core";
+import { list } from "../data.json";
 import {
-  ActionIcon,
-  Group,
-  Table,
-  Text,
-  Title,
-} from "@mantine/core";
-import listData from "../data.json";
-import { IconTableShare, IconDeviceFloppy, IconHeart } from '@tabler/icons-react';
+  IconTableShare,
+  IconDeviceFloppy,
+  IconHeart,
+} from "@tabler/icons-react";
 
-interface Props {}
+const tableData = {
+  caption: "Some elements from periodic table",
+  body: [
+    [6, 12.011, "C", "Carbon"],
+    [7, 14.007, "N", "Nitrogen"],
+    [39, 88.906, "Y", "Yttrium"],
+    [56, 137.33, "Ba", "Barium"],
+    [58, 140.12, "Ce", "Cerium"],
+  ],
+};
 
-const ListView: React.FC<Props> = () => {
-  const rows = listData.list.tiles.map((item, i) => (
-    <Table.Tr key={item.tileId}>
-      <Table.Td>
-        <Text>#{ i + 1 }</Text>
-      </Table.Td>
-      <Table.Td>
-        <Text fz="sm" fw={800}>
-          {item.headline}
-        </Text>
-        <Text fz="sm" fw={500}>
-          {item.subHeadline}
-        </Text>
-      </Table.Td>
-    </Table.Tr>
-  ));
-
+const ListView: React.FC = (data) => {
   return (
     <>
       <Group justify="flex-end" mr="150px" mt="12px">
@@ -66,13 +57,19 @@ const ListView: React.FC<Props> = () => {
         my="sm"
       >
         <Title order={2} ta="center" my="lg">
-          {listData.list.list_title}
+          {list.list_title}
         </Title>
-        <Table.ScrollContainer minWidth={450}>
-          <Table style={{ width: '70%', margin: '0 auto' }} withColumnBorders withTableBorder verticalSpacing="md">
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
-        </Table.ScrollContainer>
+        <Table
+          withRowBorders
+          withColumnBorders
+          horizontalSpacing="lg"
+          verticalSpacing="lg"
+          onDragEnter={(event) => {
+            event.preventDefault();
+            console.log('drag has entered')
+          }}
+          data={tableData}
+        />
       </Container>
     </>
   );

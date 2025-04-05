@@ -1,80 +1,216 @@
 {
-    "list": {
-      "list_id": 1,
-      "list_title": "Placeholder Title",
-      "creationDate": "1980-01-02T00:00:00.000Z",
-      "registered": true,
-      "tiles": [
+  "list": {
+    "list_id": 1,
+    "list_title": "Placeholder Title",
+    "creationDate": "1980-01-02T00:00:00.000Z",
+    "registered": true,
+    "listCols": {
+      "a": [
         {
-          "tileId": 1,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 1,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber1"
         },
         {
-          "tileId": 2,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 30,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber2"
         },
         {
-          "tileId": 3,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 3,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber3"
         },
         {
-          "tileId": 4,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 4,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber4"
         },
         {
-          "tileId": 5,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 5,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber5"
         },
         {
-          "tileId": 6,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 6,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber6"
         },
         {
-          "tileId": 7,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 7,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber7"
         },
         {
-          "tileId": 8,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 8,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber8"
         },
         {
-          "tileId": 9,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 9,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber9"
         },
         {
-          "tileId": 10,
-          "tileType": "ranking",
-          "imageUrl": "/image.png",
-          "headline": "Headline",
-          "subHeadline": "Subheadline"
+          "id": 10,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber10"
+        }
+      ],
+      "b": [
+        {
+          "id": 1,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading."
+          }
+        },
+        {
+          "id": 2,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 3,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 4,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 5,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 6,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 7,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 8,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 9,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        },
+        {
+          "id": 10,
+          "listCellType": "basicRanking",
+          "listCellAsset": "/image.png",
+          "hasColspan": true,
+          "cellTextContent": {
+            "heading": "This is a heading",
+            "subHeading": "This is a subheading"
+          }
+        }
+      ],
+      "c": [
+        {
+          "id": 1,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 31,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 3,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 4,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 5,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 6,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 7,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 8,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 9,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
+        },
+        {
+          "id": 10,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconUserSquareRounded"
         }
       ]
     }
   }
+}

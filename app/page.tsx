@@ -1,12 +1,15 @@
 "use client";
+import { useState, useEffect, ChangeEvent } from "react";
 import { Group, Avatar, Tabs } from "@mantine/core";
 import classes from "./styles.module.css";
 import ListView from "./components/ListView";
-import { Grid, Text, Card, Button, Badge } from "@mantine/core";
-import {
-  IconEdit,
-  IconListNumbers
-} from "@tabler/icons-react";
+import { Grid, Badge } from "@mantine/core";
+import { IconEdit, IconListNumbers } from "@tabler/icons-react";
+import { DndContext } from "@dnd-kit/core";
+import TabsList from "./components/navigation/TabsList";
+import MyListsContent from "./components/navigation/MyListsContent";
+import { MY_LISTS_DATA } from "./utils/mockData";
+import CustomizeListContent from "./components/navigation/CustomizeListContent";
 
 export default function HomePage() {
   return (
@@ -18,84 +21,28 @@ export default function HomePage() {
               <Avatar src="../jolteon_sprite.png" size={50} radius="sm" />
               <Badge color="cyan">0.1.0</Badge>
             </Group>
-            <Tabs color="teal" defaultValue="gallery">
-              <Tabs.List grow>
-                <Tabs.Tab value="gallery" leftSection={<IconListNumbers size={12} />}>
-                  My Lists
-                </Tabs.Tab>
-                <Tabs.Tab
-                  value="messages"
-                  leftSection={<IconEdit size={12} />}
-                >
-                  Customize List
-                </Tabs.Tab>
-              </Tabs.List>
+            <Tabs color="teal" defaultValue="myLists">
+              <TabsList
+                tabs={[
+                  {
+                    value: "myLists",
+                    heading: "My Lists",
+                    leftSection: <IconListNumbers size={12} />,
+                  },
+                  {
+                    value: "customizeList",
+                    heading: "Customize list",
+                    leftSection: <IconEdit size={12} />,
+                  },
+                ]}
+              />
 
-              <Tabs.Panel value="gallery">
-                <Button color="cyan" mt="sm">Create New List</Button>
-                <Card
-                  shadow="lg"
-                  padding="xl"
-                  component="a"
-                  href="#"
-                  target="_blank"
-                  my="sm"
-                  withBorder
-                  style={{ borderColor: 'cyan' }}
-                >
-                  <Card.Section></Card.Section>
-                  <Text fw={500} size="lg" mt="md">
-                    List Title
-                  </Text>
-                  <Text mt="xs" c="dimmed" size="sm">
-                    List Description
-                  </Text>
-                  <Text mt="xs" c="dimmed" size="xs">
-                    Created: {new Date().toLocaleString() + ""}
-                  </Text>
-                </Card>
-                <Card
-                  shadow="lg"
-                  padding="xl"
-                  component="a"
-                  href="#"
-                  target="_blank"
-                  my="sm"
-                  withBorder
-                >
-                  <Card.Section></Card.Section>
-                  <Text fw={500} size="lg" mt="md">
-                    List Title
-                  </Text>
-                  <Text mt="xs" c="dimmed" size="sm">
-                    List Description
-                  </Text>
-                  <Text mt="xs" c="dimmed" size="xs">
-                    Created: {new Date().toLocaleString() + ""}
-                  </Text>
-                </Card>
-                <Card
-                  shadow="lg"
-                  padding="xl"
-                  component="a"
-                  href="#"
-                  target="_blank"
-                  my="sm"
-                  withBorder
-                >
-                  <Card.Section></Card.Section>
-                  <Text fw={500} size="lg" mt="md">
-                    List Title
-                  </Text>
-                  <Text mt="xs" c="dimmed" size="sm">
-                    List Description
-                  </Text>
-                  <Text mt="xs" c="dimmed" size="xs">
-                    Created: 3/31/2025, 2:02:28 PM
-                  </Text>
-                </Card>
+              <Tabs.Panel value="myLists">
+                <MyListsContent lists={MY_LISTS_DATA} />
               </Tabs.Panel>
-              <Tabs.Panel value="messages">Customize list content</Tabs.Panel>
+              <Tabs.Panel my="lg" value="customizeList">
+                <CustomizeListContent />
+              </Tabs.Panel>
             </Tabs>
           </div>
 
