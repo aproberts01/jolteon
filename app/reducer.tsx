@@ -1,5 +1,8 @@
+import { COLUMN_CONTENT_MAP } from "./utils/constants";
+
 export const actionType = {
   UPDATE_LIST_NAME: "UPDATE_LIST_NAME",
+  UPDATE_LIST_COLUMN: "UPDATE_LIST_COLUMN",
 };
 
 interface Cell {
@@ -27,7 +30,31 @@ export const reducer = (draft: ListState, action: Action) => {
     case actionType.UPDATE_LIST_NAME:
       draft.list_title = payload;
       break;
+    case actionType.UPDATE_LIST_COLUMN:
+      const { body } = draft;
+      const {
+        columnContentType,
+        dropColumnIndex,
+      }: {
+        columnContentType: keyof typeof COLUMN_CONTENT_MAP;
+        dropColumnIndex: number;
+      } = payload;
 
+      const columnContent = COLUMN_CONTENT_MAP[columnContentType];
+
+      draft.body = body.map((row, rowIndex) => {
+        return row.map((cell, cellIndex) => {
+          if (cellIndex === dropColumnIndex) {
+            return {
+              ...cell,
+              listCellType: columnContent.type,
+              listCellAsset: columnContent.iconGroup[rowIndex],
+            };
+          }
+          return cell;
+        });
+      });
+      break;
     default:
       return draft;
   }

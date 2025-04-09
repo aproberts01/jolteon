@@ -2,6 +2,9 @@ import {
   IconNumber1,
   IconNumber2,
   IconNumber3,
+  IconNumber4,
+  IconNumber5,
+  IconNumber6,
   IconSquareRoundedNumber1,
   IconSquareRoundedNumber2,
   IconSquareRoundedNumber3,
@@ -13,11 +16,57 @@ export const ICON_MAP = {
   IconNumber1: IconNumber1,
   IconNumber2: IconNumber2,
   IconNumber3: IconNumber3,
+  IconNumber4: IconNumber4,
+  IconNumber5: IconNumber5,
+  IconNumber6: IconNumber6,
   IconSquareRoundedNumber1: IconSquareRoundedNumber1,
   IconSquareRoundedNumber2: IconSquareRoundedNumber2,
   IconSquareRoundedNumber3: IconSquareRoundedNumber3,
   IconPhoto: IconPhoto,
   IconSquareCheck: IconSquareCheck,
+};
+
+export const COLUMN_CONTENT_MAP = {
+  basicNumberSet: {
+    type: "basicNumberSet",
+    iconGroup: [
+      "IconNumber1",
+      "IconNumber2",
+      "IconNumber3",
+      "IconNumber4",
+      "IconNumber5",
+    ],
+  },
+  rankNumberSet: {
+    type: "rankNumberSet",
+    iconGroup: [
+      "IconSquareRoundedNumber1",
+      "IconSquareRoundedNumber2",
+      "IconSquareRoundedNumber3",
+      "IconSquareRoundedNumber4",
+      "IconSquareRoundedNumber5",
+    ],
+  },
+  imageSet: {
+    type: "imageSet",
+    iconGroup: [
+      "IconPhoto",
+      "IconPhoto",
+      "IconPhoto",
+      "IconPhoto",
+      "IconPhoto",
+    ],
+  },
+  checkboxSet: {
+    type: "checkboxSet",
+    iconGroup: [
+      "IconSquareCheck",
+      "IconSquareCheck",
+      "IconSquareCheck",
+      "IconSquareCheck",
+      "IconSquareCheck",
+    ],
+  },
 };
 
 export const CUSTOMIZE_PANEL = [

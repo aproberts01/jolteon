@@ -139,33 +139,6 @@
           "listCellType": "basicRanking",
           "listCellAsset": "IconNumber5"
         }
-      ],
-      [
-        {
-          "id": 26,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber1"
-        },
-        {
-          "id": 27,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber2"
-        },
-        {
-          "id": 28,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber3"
-        },
-        {
-          "id": 29,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber4"
-        },
-        {
-          "id": 30,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber5"
-        }
       ]
     ]
   }
