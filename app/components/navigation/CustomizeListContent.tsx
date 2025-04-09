@@ -12,7 +12,8 @@ import {
   Box,
 } from "@mantine/core";
 import { ICON_MAP } from "@/app/utils/constants";
-import { IconStarFilled, IconStar } from "@tabler/icons-react";
+import { IconStarFilled, IconStar, IconPhoto } from "@tabler/icons-react";
+import styles from './NavigationStyles.module.css';
 
 const CustomizeListContent: React.FC = () => {
   const renderCustomizePanel = (item: any) => {
@@ -21,7 +22,7 @@ const CustomizeListContent: React.FC = () => {
         return (
           <Group my="xs">
             {item.colorSwatches.map((color: string, index: number) => (
-              <ColorSwatch key={`${index}_swatch`} color={color} />
+              <ColorSwatch component="button" key={`${index}_swatch`} color={color} />
             ))}
           </Group>
         );
@@ -31,7 +32,7 @@ const CustomizeListContent: React.FC = () => {
             {item.dragItems.map(
               ({ iconGroup }: { iconGroup: string[] }, index: number) => {
                 return (
-                  <Paper draggable={true} shadow="xs" p="xs" key={`${index}_group`}>
+                  <Paper className={styles.paperStyles} draggable={true} shadow="xs" p="xs" key={`${index}_group`}>
                     <Avatar.Group>
                       {iconGroup.map((componentName: string, i) => {
                         let Component =
@@ -52,12 +53,12 @@ const CustomizeListContent: React.FC = () => {
       case "twoColContent":
         return (
           <Stack key="2-cols" my="xs">
-            <Paper shadow="xs" p="md">
+            <Paper className={styles.paperStyles} draggable={true} shadow="xs" p="md">
               <Text size="sm" fw={500}>
                 One-line simple text
               </Text>
             </Paper>
-            <Paper shadow="xs" p="md">
+            <Paper className={styles.paperStyles} draggable={true} shadow="xs" p="md">
               <Text size="sm" fw={500}>
                 Two-lines simple text
               </Text>
@@ -65,10 +66,10 @@ const CustomizeListContent: React.FC = () => {
                 Write a second line here
               </Text>
             </Paper>
-            <Paper shadow="xs" p="md">
+            <Paper className={styles.paperStyles} draggable={true} shadow="xs" p="md">
               <Flex direction="row">
                 <Box>
-                  <Avatar />
+                  <IconPhoto size={30}/>
                 </Box>
                 <Box ml="sm">
                   <Text size="sm" fw={500}>
@@ -80,7 +81,7 @@ const CustomizeListContent: React.FC = () => {
                 </Box>
               </Flex>
             </Paper>
-            <Paper shadow="xs" p="md">
+            <Paper className={styles.paperStyles} draggable={true} shadow="xs" p="md">
               <Flex direction="row">
                 <IconStarFilled />
                 <IconStarFilled />

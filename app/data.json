@@ -4,15 +4,15 @@
     "list_title": "Placeholder Title",
     "creationDate": "1980-01-02T00:00:00.000Z",
     "registered": true,
-    "listCols": {
-      "a": [
+    "body": [
+      [
         {
           "id": 1,
           "listCellType": "basicRanking",
           "listCellAsset": "IconNumber1"
         },
         {
-          "id": 30,
+          "id": 2,
           "listCellType": "basicRanking",
           "listCellAsset": "IconNumber2"
         },
@@ -30,187 +30,143 @@
           "id": 5,
           "listCellType": "basicRanking",
           "listCellAsset": "IconNumber5"
-        },
-        {
-          "id": 6,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber6"
-        },
-        {
-          "id": 7,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber7"
-        },
-        {
-          "id": 8,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber8"
-        },
-        {
-          "id": 9,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber9"
-        },
-        {
-          "id": 10,
-          "listCellType": "basicRanking",
-          "listCellAsset": "IconNumber10"
         }
       ],
-      "b": [
-        {
-          "id": 1,
-          "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading."
-          }
-        },
-        {
-          "id": 2,
-          "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
-        },
-        {
-          "id": 3,
-          "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
-        },
-        {
-          "id": 4,
-          "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
-        },
-        {
-          "id": 5,
-          "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
-        },
+      [
         {
           "id": 6,
           "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
+          "listCellAsset": "IconNumber1"
         },
         {
           "id": 7,
           "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
+          "listCellAsset": "IconNumber2"
         },
         {
           "id": 8,
           "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
+          "listCellAsset": "IconNumber3"
         },
         {
           "id": 9,
           "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
+          "listCellAsset": "IconNumber4"
         },
         {
           "id": 10,
           "listCellType": "basicRanking",
-          "listCellAsset": "/image.png",
-          "hasColspan": true,
-          "cellTextContent": {
-            "heading": "This is a heading",
-            "subHeading": "This is a subheading"
-          }
+          "listCellAsset": "IconNumber5"
         }
       ],
-      "c": [
+      [
         {
-          "id": 1,
+          "id": 11,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber1"
         },
         {
-          "id": 31,
+          "id": 12,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber2"
         },
         {
-          "id": 3,
+          "id": 13,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber3"
         },
         {
-          "id": 4,
+          "id": 14,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber4"
         },
         {
-          "id": 5,
+          "id": 15,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber5"
+        }
+      ],
+      [
+        {
+          "id": 16,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber1"
         },
         {
-          "id": 6,
+          "id": 17,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber2"
         },
         {
-          "id": 7,
+          "id": 18,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber3"
         },
         {
-          "id": 8,
+          "id": 19,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber4"
         },
         {
-          "id": 9,
+          "id": 20,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber5"
+        }
+      ],
+      [
+        {
+          "id": 21,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber1"
         },
         {
-          "id": 10,
+          "id": 22,
           "listCellType": "basicRanking",
-          "listCellAsset": "IconUserSquareRounded"
+          "listCellAsset": "IconNumber2"
+        },
+        {
+          "id": 23,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber3"
+        },
+        {
+          "id": 24,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber4"
+        },
+        {
+          "id": 25,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber5"
+        }
+      ],
+      [
+        {
+          "id": 26,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber1"
+        },
+        {
+          "id": 27,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber2"
+        },
+        {
+          "id": 28,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber3"
+        },
+        {
+          "id": 29,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber4"
+        },
+        {
+          "id": 30,
+          "listCellType": "basicRanking",
+          "listCellAsset": "IconNumber5"
         }
       ]
-    }
+    ]
   }
 }

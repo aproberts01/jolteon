@@ -1,11 +1,9 @@
 "use client";
-import { useState, useEffect, ChangeEvent } from "react";
 import { Group, Avatar, Tabs } from "@mantine/core";
 import classes from "./styles.module.css";
 import ListView from "./components/ListView";
 import { Grid, Badge } from "@mantine/core";
 import { IconEdit, IconListNumbers } from "@tabler/icons-react";
-import { DndContext } from "@dnd-kit/core";
 import TabsList from "./components/navigation/TabsList";
 import MyListsContent from "./components/navigation/MyListsContent";
 import { MY_LISTS_DATA } from "./utils/mockData";
