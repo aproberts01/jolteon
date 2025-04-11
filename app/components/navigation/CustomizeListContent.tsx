@@ -77,6 +77,8 @@ const CustomizeListContent: React.FC = () => {
         return (
           <Stack key="2-cols" my="xs">
             <Paper
+              data-column-type="oneLineSimpleText"
+              onDragStart={handleOnDragStart}
               className={styles.paperStyles}
               draggable={true}
               shadow="xs"
@@ -87,6 +89,8 @@ const CustomizeListContent: React.FC = () => {
               </Text>
             </Paper>
             <Paper
+              data-column-type="twoLineSimpleText"
+              onDragStart={handleOnDragStart}
               className={styles.paperStyles}
               draggable={true}
               shadow="xs"
@@ -100,6 +104,8 @@ const CustomizeListContent: React.FC = () => {
               </Text>
             </Paper>
             <Paper
+              data-column-type="twoLineWithImage"
+              onDragStart={handleOnDragStart}
               className={styles.paperStyles}
               draggable={true}
               shadow="xs"
@@ -120,6 +126,8 @@ const CustomizeListContent: React.FC = () => {
               </Flex>
             </Paper>
             <Paper
+              data-column-type="starRating"
+              onDragStart={handleOnDragStart}
               className={styles.paperStyles}
               draggable={true}
               shadow="xs"

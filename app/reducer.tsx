@@ -48,13 +48,15 @@ export const reducer = (draft: ListState, action: Action) => {
             return {
               ...cell,
               listCellType: columnContent.type,
-              listCellAsset: columnContent.iconGroup[rowIndex],
+              listCellAsset: (columnContent.iconGroup ?? [])[rowIndex],
+              listCellHeadline: columnContent.headline,
+              listCellSubheadline: columnContent.subheadline,
             };
           }
           return cell;
         });
       });
-      break;
+
     default:
       return draft;
   }

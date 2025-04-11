@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Container } from "@mantine/core";
-import { Table, Title } from "@mantine/core";
+import { Table, Title, Text } from "@mantine/core";
 import { list } from "../data.json";
 import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
@@ -91,20 +91,26 @@ const ListView: React.FC = (data) => {
   };
 
   const rows = body.map((listItem, i) => {
-    return (
-      <Table.Tr key={i}>
-        {listItem.map((cell, i) => {
-          const IconComponent =
-            ICON_MAP[cell.listCellAsset as keyof typeof ICON_MAP] || null;
-          return (
-            <Table.Td key={cell.id}>
-              {IconComponent && <IconComponent size={40} />}
-            </Table.Td>
-          );
-        })}
-      </Table.Tr>
-    );
-  });
+        return (
+          <Table.Tr key={i}>
+            {listItem.map((cell: { id: number; listCellType: string; listCellAsset: string; listCellHeadline?: string; listCellSubheadline?: string }, i) => {
+              const IconComponent =
+                ICON_MAP[cell.listCellAsset as keyof typeof ICON_MAP] || null;
+              return (
+                <Table.Td key={cell.id}>
+                  {IconComponent && <IconComponent size={40} />}
+                  {(cell.listCellHeadline) && (
+                    <Text>{cell.listCellHeadline}</Text>
+                  )}
+                  {(cell.listCellSubheadline) && (
+                    <Text c="dimmed">{cell.listCellSubheadline}</Text>
+                  )}
+                </Table.Td>
+              );
+            })}
+          </Table.Tr>
+        );
+      });
 
   return (
     <>

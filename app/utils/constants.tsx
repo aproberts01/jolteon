@@ -26,8 +26,17 @@ export const ICON_MAP = {
   IconSquareCheck: IconSquareCheck,
 };
 
-export const COLUMN_CONTENT_MAP = {
-  basicNumberSet: {
+export interface ColumnContentMap {
+  [key: string]: {
+    type: string;
+    iconGroup?: string[];
+    headline?: string;
+    subheadline?: string;
+  };
+}
+
+export const COLUMN_CONTENT_MAP: ColumnContentMap = {
+  basicNumberSet:  {
     type: "basicNumberSet",
     iconGroup: [
       "IconNumber1",
@@ -67,6 +76,37 @@ export const COLUMN_CONTENT_MAP = {
       "IconSquareCheck",
     ],
   },
+  oneLineSimpleText: {
+    type: "oneLineSimpleText",
+    headline: "One-line simple text",
+  },
+  twoLineSimpleText: {
+    type: "twoLineSimpleText",
+    headline: "Two-line simple text",
+    subheadline: "Your second line goes here",
+  },
+  twoLineWithImage: {
+    type: "twoLineWithImage",
+    headline: "Two-line with image",
+    subheadline: "Your second line goes here",
+    iconGroup: [
+      "IconPhoto",
+      "IconPhoto",
+      "IconPhoto",
+      "IconPhoto",
+      "IconPhoto",
+    ],
+  },
+  starRating: {
+    type: "starRating",
+    iconGroup: [
+      "IconStarFilled",
+      "IconStarFilled",
+      "IconStarFilled",
+      "IconStar",
+      "IconStar",
+    ],
+  }
 };
 
 export const CUSTOMIZE_PANEL = [
