@@ -7,11 +7,15 @@ import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
 import ListActions from "./ListActions";
 import { ICON_MAP } from "../utils/constants";
+import { useListDispatch, useListState } from "../ListContext";
+import BottomDetailsDrawer from "./navigation/Drawer";
 
 const ListView: React.FC = (data) => {
   const [listData, dispatch] = useImmerReducer(reducer, list);
   const { body, list_title } = listData;
   const [currentlyHovered, setCurrentlyHovered] = useState<number | null>(null);
+  const listDispatch = useListDispatch();
+  const listState = useListState();
   let dragCount = 0;
 
   const handleDataUpdateOnDrop = (data: string, currentlyHovered: number) => {
@@ -24,6 +28,12 @@ const ListView: React.FC = (data) => {
         dropColumnIndex: currentlyHovered,
       },
     });
+
+    if (listDispatch) {
+      listDispatch({
+        type: "TOGGLE_DRAWER",
+      });
+    }
   };
 
   /**
@@ -138,6 +148,16 @@ const ListView: React.FC = (data) => {
           <Table.Caption>Drag items into table to customize list</Table.Caption>
         </Table>
       </Container>
+      <BottomDetailsDrawer
+        open={listState?.drawerOpen ?? false}
+        close={() => {
+          if (listDispatch) {
+            listDispatch({
+              type: "TOGGLE_DRAWER",
+            });
+          }
+        }}
+      />
     </>
   );
 };
