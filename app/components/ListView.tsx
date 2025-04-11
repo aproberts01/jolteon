@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, createRef, useEffect, useRef } from "react";
 import { Container } from "@mantine/core";
-import { Table, Title, Text } from "@mantine/core";
+import { Table, Title, Text, Flex, Box } from "@mantine/core";
 import { list } from "../data.json";
 import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
@@ -10,10 +10,21 @@ import { ICON_MAP } from "../utils/constants";
 import { useListDispatch, useListState } from "../ListContext";
 import BottomDetailsDrawer from "./navigation/Drawer";
 
+const useRefs = () => {
+  const refsByKey = useRef<Record<string,HTMLElement | null>>({})
+
+  const setRef = (element: HTMLElement | null, key: string) => {
+    refsByKey.current[key] = element;
+  }
+
+  return {refsByKey: refsByKey.current, setRef};
+}
+
 const ListView: React.FC = (data) => {
   const [listData, dispatch] = useImmerReducer(reducer, list);
   const { body, list_title } = listData;
   const [currentlyHovered, setCurrentlyHovered] = useState<number | null>(null);
+  const { refsByKey, setRef } = useRefs();
   const listDispatch = useListDispatch();
   const listState = useListState();
   let dragCount = 0;
@@ -91,26 +102,41 @@ const ListView: React.FC = (data) => {
   };
 
   const rows = body.map((listItem, i) => {
-        return (
-          <Table.Tr key={i}>
-            {listItem.map((cell: { id: number; listCellType: string; listCellAsset: string; listCellHeadline?: string; listCellSubheadline?: string }, i) => {
-              const IconComponent =
-                ICON_MAP[cell.listCellAsset as keyof typeof ICON_MAP] || null;
-              return (
-                <Table.Td key={cell.id}>
-                  {IconComponent && <IconComponent size={40} />}
-                  {(cell.listCellHeadline) && (
-                    <Text>{cell.listCellHeadline}</Text>
-                  )}
-                  {(cell.listCellSubheadline) && (
-                    <Text c="dimmed">{cell.listCellSubheadline}</Text>
-                  )}
-                </Table.Td>
-              );
-            })}
-          </Table.Tr>
-        );
-      });
+    return (
+      <Table.Tr key={i}>
+        {listItem.map(
+          (
+            cell: {
+              id: number;
+              listCellType: string;
+              listCellAsset: string;
+              listCellHeadline?: string;
+              listCellSubheadline?: string;
+            },
+            j
+          ) => {
+            const IconComponent =
+              ICON_MAP[cell.listCellAsset as keyof typeof ICON_MAP] || null;
+            return (
+              <Table.Td key={cell.id} ref={elRef => { if (i === 0) setRef(elRef, (j).toString()); }}>
+                <Flex direction="row">
+                  <Box>{IconComponent && <IconComponent size={40} />}</Box>
+                  <Box ml="sm">
+                    {cell.listCellHeadline && (
+                      <Text>{cell.listCellHeadline}</Text>
+                    )}
+                    {cell.listCellSubheadline && (
+                      <Text c="dimmed">{cell.listCellSubheadline}</Text>
+                    )}
+                  </Box>
+                </Flex>
+              </Table.Td>
+            );
+          }
+        )}
+      </Table.Tr>
+    );
+  });
 
   return (
     <>
@@ -124,6 +150,7 @@ const ListView: React.FC = (data) => {
           width: "80%",
           borderColor: "grey",
           position: "relative",
+          paddingInline: "0px",
         }}
         my="sm"
         onDragOver={(e) => e.preventDefault()}
@@ -134,22 +161,30 @@ const ListView: React.FC = (data) => {
         <Title order={2} ta="center" my="lg">
           {list_title}
         </Title>
-        {Array.from({ length: 5 }, (_, i) => (
-          <div
-            key={i}
-            data-column-number={i}
-            style={{
-              width: `${i === 4 ? 268 : 228}px`,
-              height: "100%",
-              position: "absolute",
-              top: 0,
-              left: `${i * 228}px`,
-              backgroundColor:
-                currentlyHovered === i ? "rgba(51, 170, 51, .1)" : undefined,
-            }}
-          ></div>
-        ))}
-        <Table horizontalSpacing="lg" verticalSpacing="lg">
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          {Array.from({ length: 5 }, (_, i) => (
+            <div
+              key={i}
+              data-column-number={i}
+              style={{
+                flex: refsByKey[i]?.offsetWidth ? undefined : 1,
+                backgroundColor:
+                  currentlyHovered === i ? "rgba(51, 170, 51, .1)" : undefined,
+                width: refsByKey[i]?.offsetWidth ? `${refsByKey[i].offsetWidth}px` : "100%",
+              }}
+            ></div>
+          ))}
+        </div>
+        <Table horizontalSpacing="lg" verticalSpacing="lg" withColumnBorders>
           <Table.Tbody>{rows}</Table.Tbody>
           <Table.Caption>Drag items into table to customize list</Table.Caption>
         </Table>
