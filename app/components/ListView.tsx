@@ -6,27 +6,27 @@ import { list } from "../data.json";
 import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
 import ListActions from "./ListActions";
-import { ICON_MAP } from "../utils/constants";
+import { ICON_MAP, COLUMN_AMOUNT } from "../utils/constants";
 import { useListDispatch, useListState } from "../ListContext";
-import BottomDetailsDrawer from "./navigation/Drawer";
+import { Cell, ListState } from "../reducer";
 
 const useRefs = () => {
-  const refsByKey = useRef<Record<string,HTMLElement | null>>({})
+  const refsByKey = useRef<Record<string, HTMLElement | null>>({});
 
   const setRef = (element: HTMLElement | null, key: string) => {
     refsByKey.current[key] = element;
-  }
+  };
 
-  return {refsByKey: refsByKey.current, setRef};
-}
+  return { refsByKey: refsByKey.current, setRef };
+};
 
 const ListView: React.FC = (data) => {
-  const [listData, dispatch] = useImmerReducer(reducer, list);
-  const { body, list_title } = listData;
+  const [listData, dispatch] = useImmerReducer(reducer, list as ListState);
+  const { body, list_title }: { body: Array<Array<Cell>>; list_title: string } =
+    listData;
   const [currentlyHovered, setCurrentlyHovered] = useState<number | null>(null);
   const { refsByKey, setRef } = useRefs();
   const listDispatch = useListDispatch();
-  const listState = useListState();
   let dragCount = 0;
 
   const handleDataUpdateOnDrop = (data: string, currentlyHovered: number) => {
@@ -101,39 +101,44 @@ const ListView: React.FC = (data) => {
     }
   };
 
-  const rows = body.map((listItem, i) => {
+  const rows = body.map((listItem: Array<Cell>, i: number) => {
     return (
       <Table.Tr key={i}>
-        {listItem.map(
-          (
-            cell: {
-              id: number;
-              listCellType: string;
-              listCellAsset: string;
-              listCellHeadline?: string;
-              listCellSubheadline?: string;
-            },
-            j
-          ) => {
-            const IconComponent =
-              ICON_MAP[cell.listCellAsset as keyof typeof ICON_MAP] || null;
-            return (
-              <Table.Td key={cell.id} ref={elRef => { if (i === 0) setRef(elRef, (j).toString()); }}>
-                <Flex direction="row">
-                  <Box>{IconComponent && <IconComponent size={40} />}</Box>
-                  <Box ml="sm">
-                    {cell.listCellHeadline && (
-                      <Text>{cell.listCellHeadline}</Text>
-                    )}
-                    {cell.listCellSubheadline && (
-                      <Text c="dimmed">{cell.listCellSubheadline}</Text>
-                    )}
-                  </Box>
-                </Flex>
-              </Table.Td>
-            );
-          }
-        )}
+        {listItem.slice(0, COLUMN_AMOUNT).map((cell: Cell, j: number) => {
+          const { listCellAsset } = cell;
+          const IconComponent =
+            ICON_MAP[listCellAsset as keyof typeof ICON_MAP] || null;
+          return (
+            <Table.Td
+              key={cell.id}
+              ref={(elRef) => {
+                i === 0 && setRef(elRef, j.toString());
+              }}
+            >
+              <Flex direction="row">
+                {IconComponent && <IconComponent size={40} />}
+                {cell.listCellType === "starRating" &&
+                  Array.isArray(cell.listCellAsset) && (
+                    <>
+                      {cell.listCellAsset.map((asset, i) => {
+                        const StarIcon =
+                          ICON_MAP[asset as keyof typeof ICON_MAP] || null;
+                        return <StarIcon key={`${asset}_${i}`} size={20} />;
+                      })}
+                    </>
+                  )}
+                <Box ml="sm">
+                  {cell.listCellHeadline && (
+                    <Text>{cell.listCellHeadline}</Text>
+                  )}
+                  {cell.listCellSubheadline && (
+                    <Text c="dimmed">{cell.listCellSubheadline}</Text>
+                  )}
+                </Box>
+              </Flex>
+            </Table.Td>
+          );
+        })}
       </Table.Tr>
     );
   });
@@ -179,7 +184,9 @@ const ListView: React.FC = (data) => {
                 flex: refsByKey[i]?.offsetWidth ? undefined : 1,
                 backgroundColor:
                   currentlyHovered === i ? "rgba(51, 170, 51, .1)" : undefined,
-                width: refsByKey[i]?.offsetWidth ? `${refsByKey[i].offsetWidth}px` : "100%",
+                width: refsByKey[i]?.offsetWidth
+                  ? `${refsByKey[i].offsetWidth}px`
+                  : "100%",
               }}
             ></div>
           ))}
@@ -189,16 +196,6 @@ const ListView: React.FC = (data) => {
           <Table.Caption>Drag items into table to customize list</Table.Caption>
         </Table>
       </Container>
-      <BottomDetailsDrawer
-        open={listState?.drawerOpen ?? false}
-        close={() => {
-          if (listDispatch) {
-            listDispatch({
-              type: "TOGGLE_DRAWER",
-            });
-          }
-        }}
-      />
     </>
   );
 };

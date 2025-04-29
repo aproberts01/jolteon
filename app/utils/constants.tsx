@@ -8,8 +8,13 @@ import {
   IconSquareRoundedNumber1,
   IconSquareRoundedNumber2,
   IconSquareRoundedNumber3,
+  IconSquareRoundedNumber4,
+  IconSquareRoundedNumber5,
   IconPhoto,
   IconSquareCheck,
+  IconStar,
+  IconStarFilled,
+  IconStarHalfFilled,
 } from "@tabler/icons-react";
 
 export const ICON_MAP = {
@@ -22,14 +27,21 @@ export const ICON_MAP = {
   IconSquareRoundedNumber1: IconSquareRoundedNumber1,
   IconSquareRoundedNumber2: IconSquareRoundedNumber2,
   IconSquareRoundedNumber3: IconSquareRoundedNumber3,
+  IconSquareRoundedNumber4: IconSquareRoundedNumber4,
+  IconSquareRoundedNumber5: IconSquareRoundedNumber5,
+  IconStarFilled: IconStarFilled,
+  IconStar: IconStar,
+  IconStarHalfFilled: IconStarHalfFilled,
   IconPhoto: IconPhoto,
   IconSquareCheck: IconSquareCheck,
 };
 
+export const COLUMN_AMOUNT = 3;
+
 export interface ColumnContentMap {
   [key: string]: {
     type: string;
-    iconGroup?: string[];
+    iconGroup?: string[] | string[][];
     headline?: string;
     subheadline?: string;
   };
@@ -100,11 +112,11 @@ export const COLUMN_CONTENT_MAP: ColumnContentMap = {
   starRating: {
     type: "starRating",
     iconGroup: [
-      "IconStarFilled",
-      "IconStarFilled",
-      "IconStarFilled",
-      "IconStar",
-      "IconStar",
+      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
+      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
+      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
+      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
+      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
     ],
   }
 };
@@ -116,8 +128,8 @@ export const CUSTOMIZE_PANEL = [
     colorSwatches: ["#009790", "#ffe8d5", "#f08080"],
   },
   {
-    value: "oneColContent",
-    heading: "1-col Content",
+    value: "basicListContent",
+    heading: "Basic List Content",
     dragItems: [
       {
         type: "basicNumberSet",
@@ -142,8 +154,8 @@ export const CUSTOMIZE_PANEL = [
     ],
   },
   {
-    value: "twoColContent",
-    heading: "2-col Content",
+    value: "dynamicListContent",
+    heading: "Dynamic content",
     dragItems: [
       {
         type: "oneLineSimpleText",
@@ -152,17 +164,17 @@ export const CUSTOMIZE_PANEL = [
       {
         type: "twoLineSimpleText",
         headline: "Two-line simple text",
-        subheadline: "Your second line goes here",
+        subheadline: "Second line goes here",
       },
       {
         type: "twoLineWithImage",
         headline: "Two-line with image",
-        subheadline: "Your second line goes here",
+        subheadline: "Second line goes here",
         iconGroup: [],
       },
       {
         type: "starRating",
-        iconGroup: [],
+        iconGroup: ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
       },
     ],
   },

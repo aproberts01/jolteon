@@ -1,5 +1,6 @@
 import React from "react";
 import { Drawer } from "@mantine/core";
+import RowCarousel from "./RowCarousel";
 
 const BottomDetailsDrawer: React.FC<{ open: boolean; close?: () => void }> = ({
   open,
@@ -12,7 +13,7 @@ const BottomDetailsDrawer: React.FC<{ open: boolean; close?: () => void }> = ({
       onClose={close || (() => {})}
       title="Row detail drawer"
     >
-      Future drawer content will go here
+      <RowCarousel />
     </Drawer>
   );
 };

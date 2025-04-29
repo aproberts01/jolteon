@@ -3,17 +3,11 @@ import { CUSTOMIZE_PANEL } from "@/app/utils/constants";
 import {
   Text,
   ColorSwatch,
-  Paper,
   Group,
   SimpleGrid,
-  Avatar,
   Stack,
-  Flex,
-  Box,
 } from "@mantine/core";
-import { ICON_MAP } from "@/app/utils/constants";
-import { IconStarFilled, IconStar, IconPhoto } from "@tabler/icons-react";
-import styles from "./NavigationStyles.module.css";
+import DragItem from "./DragItem";
 
 const CustomizeListContent: React.FC = () => {
   const handleOnDragStart = (event: React.DragEvent<HTMLDivElement>) => {
@@ -38,7 +32,7 @@ const CustomizeListContent: React.FC = () => {
             ))}
           </Group>
         );
-      case "oneColContent":
+      case "basicListContent":
         return (
           <SimpleGrid my="xs" cols={2}>
             {item.dragItems.map(
@@ -47,100 +41,49 @@ const CustomizeListContent: React.FC = () => {
                 index: number
               ) => {
                 return (
-                  <Paper
-                    data-column-type={type}
+                  <DragItem
+                    key={type}
                     onDragStart={handleOnDragStart}
-                    className={styles.paperStyles}
-                    draggable={true}
-                    shadow="xs"
-                    p="xs"
-                    key={`${index}_group`}
-                  >
-                    <Avatar.Group>
-                      {iconGroup.map((componentName: string, i) => {
-                        let Component =
-                          ICON_MAP[componentName as keyof typeof ICON_MAP];
-                        return (
-                          <Avatar key={`${componentName}_${i}`}>
-                            <Component />
-                          </Avatar>
-                        );
-                      })}
-                    </Avatar.Group>
-                  </Paper>
+                    iconGroup={iconGroup}
+                    dataColumnType={type}
+                    contentType={item.value}
+                  />
                 );
               }
             )}
           </SimpleGrid>
         );
-      case "twoColContent":
+      case "dynamicListContent":
         return (
           <Stack key="2-cols" my="xs">
-            <Paper
-              data-column-type="oneLineSimpleText"
-              onDragStart={handleOnDragStart}
-              className={styles.paperStyles}
-              draggable={true}
-              shadow="xs"
-              p="md"
-            >
-              <Text size="sm" fw={500}>
-                One-line simple text
-              </Text>
-            </Paper>
-            <Paper
-              data-column-type="twoLineSimpleText"
-              onDragStart={handleOnDragStart}
-              className={styles.paperStyles}
-              draggable={true}
-              shadow="xs"
-              p="md"
-            >
-              <Text size="sm" fw={500}>
-                Two-lines simple text
-              </Text>
-              <Text size="sm" c="dimmed">
-                Write a second line here
-              </Text>
-            </Paper>
-            <Paper
-              data-column-type="twoLineWithImage"
-              onDragStart={handleOnDragStart}
-              className={styles.paperStyles}
-              draggable={true}
-              shadow="xs"
-              p="md"
-            >
-              <Flex direction="row">
-                <Box>
-                  <IconPhoto size={30} />
-                </Box>
-                <Box ml="sm">
-                  <Text size="sm" fw={500}>
-                    Two-lines with image
-                  </Text>
-                  <Text size="sm" c="dimmed">
-                    Write a second line here
-                  </Text>
-                </Box>
-              </Flex>
-            </Paper>
-            <Paper
-              data-column-type="starRating"
-              onDragStart={handleOnDragStart}
-              className={styles.paperStyles}
-              draggable={true}
-              shadow="xs"
-              p="md"
-            >
-              <Flex direction="row">
-                <IconStarFilled />
-                <IconStarFilled />
-                <IconStarFilled />
-                <IconStar />
-                <IconStar />
-              </Flex>
-            </Paper>
+            {item.dragItems.map(
+              (
+                {
+                  type,
+                  headline,
+                  subheadline,
+                  iconGroup,
+                }: {
+                  type: string;
+                  headline: string;
+                  subheadline: string;
+                  iconGroup?: string[];
+                },
+                index: number
+              ) => {
+                return (
+                  <DragItem
+                    key={type}
+                    onDragStart={handleOnDragStart}
+                    dataColumnType={type}
+                    iconGroup={iconGroup}
+                    contentType={item.value}
+                    headline={headline}
+                    subheadline={subheadline}
+                  />
+                );
+              }
+            )}
           </Stack>
         );
       default:

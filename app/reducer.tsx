@@ -5,13 +5,15 @@ export const actionType = {
   UPDATE_LIST_COLUMN: "UPDATE_LIST_COLUMN",
 };
 
-interface Cell {
+export interface Cell {
   id: number;
   listCellType: string;
-  listCellAsset: string;
+  listCellAsset?: string | string[];
+  listCellHeadline?: string;
+  listCellSubheadline?: string;
 }
 
-interface ListState {
+export interface ListState {
   list_id: number;
   list_title: string;
   creationDate: string;
