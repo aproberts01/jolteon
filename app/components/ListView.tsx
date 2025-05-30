@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, createRef, useEffect, useRef } from "react";
 import { Container } from "@mantine/core";
-import { Table, Title, Text, Flex, Box } from "@mantine/core";
+import { Table, Title, Text, Flex, Box, Button } from "@mantine/core";
 import { list } from "../data.json";
 import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
@@ -144,6 +144,21 @@ const ListView: React.FC = (data) => {
     );
   });
 
+  const generate = async () => {
+    const res = await fetch("/api/screenshot?url=http:localhost:3000");
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "screenshot.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <>
       <ListActions />
@@ -205,6 +220,8 @@ const ListView: React.FC = (data) => {
       ) : (
         <NewList />
       )}
+      {/* test list generation */}
+      {/* <Button id="generateButton" onClick={generate}>Generate image</Button> */}
     </>
   );
 };

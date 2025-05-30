@@ -36,8 +36,8 @@ export const ICON_MAP = {
   IconSquareCheck: IconSquareCheck,
 };
 
-export const COLUMN_AMOUNT = 3;
-export const JOLTY_VERSION = 2;
+export const COLUMN_AMOUNT: number = 3;
+export const JOLTY_VERSION: number = 2;
 
 export interface ColumnContentMap {
   [key: string]: {

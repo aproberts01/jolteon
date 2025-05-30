@@ -49,7 +49,7 @@ const mockData = [
     description: "A visually stunning journey through space and time.",
     rankingAsset: "IconNumber5",
     imageUrl: "/assets/horse_girl.jpg",
-  }
+  },
 ];
 
 const NewList: React.FC = () => {
@@ -63,11 +63,12 @@ const NewList: React.FC = () => {
         borderColor: "grey",
         position: "relative",
         paddingInline: "0px",
-        height: '80vh',
-        overflowY: 'auto',
+        height: "80vh",
+        overflowY: "auto",
       }}
       my="sm"
       px="lg"
+      id="list-selector"
     >
       <ul
         style={{
@@ -86,7 +87,7 @@ const NewList: React.FC = () => {
             description,
             rankingAsset,
             imageUrl,
-            id
+            id,
           }) => (
             <Card
               headline={headline}
