@@ -13,7 +13,7 @@ import { ListProvider } from "./ListContext";
 export default function HomePage() {
   return (
     <ListProvider>
-      <Grid>
+      <Grid gutter={0}>
         <Grid.Col span={2}>
           <nav className={classes.navbar}>
             <div className={classes.navbarMain}>

@@ -6,9 +6,10 @@ import { list } from "../data.json";
 import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
 import ListActions from "./ListActions";
-import { ICON_MAP, COLUMN_AMOUNT } from "../utils/constants";
+import { ICON_MAP, COLUMN_AMOUNT, JOLTY_VERSION } from "../utils/constants";
 import { useListDispatch, useListState } from "../ListContext";
 import { Cell, ListState } from "../reducer";
+import NewList from "./NewList";
 
 const useRefs = () => {
   const refsByKey = useRef<Record<string, HTMLElement | null>>({});
@@ -146,56 +147,64 @@ const ListView: React.FC = (data) => {
   return (
     <>
       <ListActions />
-      <Container
-        fluid
-        style={{
-          border: "solid 1px",
-          borderRadius: "20px",
-          padding: "20px",
-          width: "80%",
-          borderColor: "grey",
-          position: "relative",
-          paddingInline: "0px",
-        }}
-        my="sm"
-        onDragOver={(e) => e.preventDefault()}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <Title order={2} ta="center" my="lg">
-          {list_title}
-        </Title>
-        <div
+      {JOLTY_VERSION === 1 ? (
+        <Container
+          fluid
           style={{
-            position: "absolute",
-            display: "flex",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
+            border: "solid 1px",
+            borderRadius: "20px",
+            padding: "20px",
+            width: "80%",
+            borderColor: "grey",
+            position: "relative",
+            paddingInline: "0px",
           }}
+          my="sm"
+          onDragOver={(e) => e.preventDefault()}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
         >
-          {Array.from({ length: 5 }, (_, i) => (
-            <div
-              key={i}
-              data-column-number={i}
-              style={{
-                flex: refsByKey[i]?.offsetWidth ? undefined : 1,
-                backgroundColor:
-                  currentlyHovered === i ? "rgba(51, 170, 51, .1)" : undefined,
-                width: refsByKey[i]?.offsetWidth
-                  ? `${refsByKey[i].offsetWidth}px`
-                  : "100%",
-              }}
-            ></div>
-          ))}
-        </div>
-        <Table horizontalSpacing="lg" verticalSpacing="lg" withColumnBorders>
-          <Table.Tbody>{rows}</Table.Tbody>
-          <Table.Caption>Drag items into table to customize list</Table.Caption>
-        </Table>
-      </Container>
+          <Title order={2} ta="center" my="lg">
+            {list_title}
+          </Title>
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            {Array.from({ length: 5 }, (_, i) => (
+              <div
+                key={i}
+                data-column-number={i}
+                style={{
+                  flex: refsByKey[i]?.offsetWidth ? undefined : 1,
+                  backgroundColor:
+                    currentlyHovered === i
+                      ? "rgba(51, 170, 51, .1)"
+                      : undefined,
+                  width: refsByKey[i]?.offsetWidth
+                    ? `${refsByKey[i].offsetWidth}px`
+                    : "100%",
+                }}
+              ></div>
+            ))}
+          </div>
+          <Table horizontalSpacing="lg" verticalSpacing="lg" withColumnBorders>
+            <Table.Tbody>{rows}</Table.Tbody>
+            <Table.Caption>
+              Drag items into table to customize list
+            </Table.Caption>
+          </Table>
+        </Container>
+      ) : (
+        <NewList />
+      )}
     </>
   );
 };

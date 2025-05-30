@@ -37,6 +37,7 @@ export const ICON_MAP = {
 };
 
 export const COLUMN_AMOUNT = 3;
+export const JOLTY_VERSION = 2;
 
 export interface ColumnContentMap {
   [key: string]: {

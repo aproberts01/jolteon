@@ -67,3 +67,10 @@
   width: 25px;
   height: 25px;
 }
+
+.listContainer {
+  border: solid 1px var(--mantine-color-dark-4);
+  border-radius: var(--mantine-radius-md);
+  overflow: hidden;
+  display: flex;
+}
