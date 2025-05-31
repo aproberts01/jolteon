@@ -12,25 +12,24 @@ import {
   Button,
 } from "@mantine/core";
 import DragItem from "./DragItem";
-import { useImmerReducer } from "use-immer";
-import { reducer } from "../../reducer";
-import { newList } from "../../newData.json";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { updateListData } from "../../../lib/listSlice"
+
 
 const NewCustomizeListContent: React.FC = () => {
-  const [dispatch] = useImmerReducer(reducer, newList as ListState);
-  const handleOnDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-    const { currentTarget, dataTransfer } = event;
-    const attributeType = currentTarget.getAttribute("data-column-type");
-    if (attributeType) {
-      dataTransfer.setData("text/plain", attributeType);
-    }
-  };
-
+  const dispatch = useDispatch();
   const handleOnClick = (event: React.DragEvent<HTMLDivElement>) => {
     const { currentTarget, dataTransfer } = event;
     const columnContentType = currentTarget.getAttribute("data-column-type");
 
     //handle dispatch here
+    if (columnContentType) {
+      dispatch(updateListData({
+        columnContentType: columnContentType as keyof typeof ICON_MAP,
+        dropColumnIndex: 0,
+      }));
+    }
   };
 
   const renderCustomizePanel = (item: any) => {

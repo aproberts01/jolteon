@@ -8,11 +8,12 @@ import TabsList from "./components/navigation/TabsList";
 import MyListsContent from "./components/navigation/MyListsContent";
 import { MY_LISTS_DATA } from "./utils/mockData";
 import NewCustomizeListContent from "./components/navigation/NewCustomizeListContent";
-import { ListProvider } from "./ListContext";
+import { Provider } from 'react-redux';
+import store from '../lib/store';
 
 export default function HomePage() {
   return (
-    <ListProvider>
+    <Provider store={store}>
       <Grid gutter={0}>
         <Grid.Col span={2}>
           <nav className={classes.navbar}>
@@ -61,6 +62,6 @@ export default function HomePage() {
           <ListView />
         </Grid.Col>
       </Grid>
-    </ListProvider>
+    </Provider>
   );
 }
