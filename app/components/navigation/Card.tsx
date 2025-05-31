@@ -60,8 +60,8 @@ const Card: React.FC<CardProps> = ({
       <Box m="lg">
         <Title order={4}>{headline}</Title>
         <Box>{"*".repeat(starRating)}</Box>
-        <Text c="dimmed">{subheadline}</Text>
-        <Text c="dimmed">{description}</Text>
+        <Text size="sm" c="dimmed">{subheadline}</Text>
+        <Text size="sm">{description}</Text>
       </Box>
     </li>
   );

@@ -49,7 +49,7 @@ export interface ColumnContentMap {
 }
 
 export const COLUMN_CONTENT_MAP: ColumnContentMap = {
-  basicNumberSet:  {
+  basicNumberSet: {
     type: "basicNumberSet",
     iconGroup: [
       "IconNumber1",
@@ -113,13 +113,43 @@ export const COLUMN_CONTENT_MAP: ColumnContentMap = {
   starRating: {
     type: "starRating",
     iconGroup: [
-      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
-      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
-      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
-      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
-      ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
+      [
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarHalfFilled",
+        "IconStar",
+      ],
+      [
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarHalfFilled",
+        "IconStar",
+      ],
+      [
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarHalfFilled",
+        "IconStar",
+      ],
+      [
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarHalfFilled",
+        "IconStar",
+      ],
+      [
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarFilled",
+        "IconStarHalfFilled",
+        "IconStar",
+      ],
     ],
-  }
+  },
 };
 
 export const CUSTOMIZE_PANEL = [
@@ -175,8 +205,64 @@ export const CUSTOMIZE_PANEL = [
       },
       {
         type: "starRating",
-        iconGroup: ["IconStarFilled", "IconStarFilled", "IconStarFilled", "IconStarHalfFilled", "IconStar"],
+        iconGroup: [
+          "IconStarFilled",
+          "IconStarFilled",
+          "IconStarFilled",
+          "IconStarHalfFilled",
+          "IconStar",
+        ],
       },
+    ],
+  },
+];
+
+export const NEW_CUSTOMIZE_PANEL = [
+  {
+    value: "title",
+    heading: "Title & Description",
+  },
+  {
+    value: "backgroundColor",
+    heading: "Background Color",
+    colorSwatches: ["#009790", "#ffe8d5", "#f08080"],
+  },
+  {
+    value: "listIcons",
+    heading: "List Icons",
+    items: [
+      {
+        type: "basicNumberSet",
+        iconGroup: ["IconNumber1", "IconNumber2", "IconNumber3"],
+      },
+      {
+        type: "rankNumberSet",
+        iconGroup: [
+          "IconSquareRoundedNumber1",
+          "IconSquareRoundedNumber2",
+          "IconSquareRoundedNumber3",
+        ],
+      },
+      {
+        type: "imageSet",
+        iconGroup: ["IconPhoto", "IconPhoto", "IconPhoto"],
+      },
+      {
+        type: "checkboxSet",
+        iconGroup: ["IconSquareCheck", "IconSquareCheck", "IconSquareCheck"],
+      },
+    ],
+  },
+  {
+    value: "imageArrangement",
+    heading: "Image Arrangement",
+    items: [
+      {
+        type: "leftAlignedImage",
+      },
+      {
+        type: "fullWidthImage",
+      }
     ],
   },
 ];

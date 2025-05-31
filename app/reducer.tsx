@@ -5,20 +5,23 @@ export const actionType = {
   UPDATE_LIST_COLUMN: "UPDATE_LIST_COLUMN",
 };
 
-export interface Cell {
+export interface ListItem {
   id: number;
-  listCellType: string;
-  listCellAsset?: string | string[];
-  listCellHeadline?: string;
-  listCellSubheadline?: string;
+  starRating: number;
+  headline: string;
+  subheadline: string;
+  description: string;
+  rankingAsset: string;
+  imageUrl: string;
 }
 
 export interface ListState {
-  list_id: number;
-  list_title: string;
+  id: number;
+  title: string;
+  description: string;
   creationDate: string;
   registered: boolean;
-  body: Array<Array<Cell>>;
+  body: Array<Array<ListItem>>;
 }
 
 interface Action {
@@ -30,7 +33,7 @@ export const reducer = (draft: ListState, action: Action) => {
   const { payload } = action;
   switch (action.type) {
     case actionType.UPDATE_LIST_NAME:
-      draft.list_title = payload;
+      draft.title = payload;
       break;
     case actionType.UPDATE_LIST_COLUMN:
       const { body } = draft;
@@ -44,20 +47,13 @@ export const reducer = (draft: ListState, action: Action) => {
 
       const columnContent = COLUMN_CONTENT_MAP[columnContentType];
 
-      draft.body = body.map((row, rowIndex) => {
-        return row.map((cell, cellIndex) => {
-          if (cellIndex === dropColumnIndex) {
-            return {
-              ...cell,
-              listCellType: columnContent.type,
-              listCellAsset: (columnContent.iconGroup ?? [])[rowIndex],
-              listCellHeadline: columnContent.headline,
-              listCellSubheadline: columnContent.subheadline,
-            };
-          }
-          return cell;
-        });
-      });
+      draft.body = body.map((listItem, index) => {
+        return {
+          ...listItem,
+          rankingAsset: columnContent.iconGroup?.[index] || "",
+        }
+      })
+      break;
 
     default:
       return draft;

@@ -3,83 +3,67 @@ import { Container, Title, Text, Box } from "@mantine/core";
 import styles from "../styles.module.css";
 import { IconNumber1 } from "@tabler/icons-react";
 import Card from "./navigation/Card";
+import ListGenerateAction from "./ListGenerateAction";
 
-const mockData = [
-  {
-    id: 1,
-    starRating: 5,
-    headline: "Deadpool",
-    subheadline: "Marvel Comics",
-    description: "A hilarious anti-hero movie with Ryan Reynolds.",
-    rankingAsset: "IconNumber1",
-    imageUrl: "/assets/climbing_girl.jpg",
-  },
-  {
-    id: 2,
-    starRating: 4,
-    headline: "The Dark Knight",
-    subheadline: "DC Comics",
-    description: "A gripping tale of Batman's fight against the Joker.",
-    rankingAsset: "IconNumber2",
-    imageUrl: "/assets/fencing.jpg",
-  },
-  {
-    id: 3,
-    starRating: 4,
-    headline: "The Godfather",
-    subheadline: "Paramount Pictures",
-    description: "A classic crime drama about the Corleone family.",
-    rankingAsset: "IconNumber3",
-    imageUrl: "/assets/skateboarder.jpg",
-  },
-  {
-    id: 4,
-    starRating: 3,
-    headline: "Inception",
-    subheadline: "Warner Bros.",
-    description: "A mind-bending thriller about dreams within dreams.",
-    rankingAsset: "IconNumber4",
-    imageUrl: "/assets/swim_girls.jpg",
-  },
-  {
-    id: 5,
-    starRating: 5,
-    headline: "Interstellar",
-    subheadline: "Paramount Pictures",
-    description: "A visually stunning journey through space and time.",
-    rankingAsset: "IconNumber5",
-    imageUrl: "/assets/horse_girl.jpg",
-  },
-];
+interface ListItems {
+  id: number;
+  starRating: number;
+  headline: string;
+  subheadline: string;
+  description: string;
+  rankingAsset: string;
+  imageUrl: string;
+}
 
-const NewList: React.FC = () => {
+interface NewListProps {
+  title: string;
+  description: string;
+  listData: ListItems[];
+}
+
+const NewList: React.FC<NewListProps> = ({ title, description, listData }) => {
   return (
     <Container
       fluid
       style={{
         border: "solid 1px",
         borderRadius: "20px",
-        width: "80%",
+        width: "40vw",
         borderColor: "grey",
         position: "relative",
         paddingInline: "0px",
-        height: "80vh",
+        height: "calc(100vh - var(--mantine-spacing-sm) * 2)",
         overflowY: "auto",
       }}
       my="sm"
-      px="lg"
+      px="xl"
       id="list-selector"
     >
+      <ListGenerateAction />
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "15vh",
+        }}
+      >
+        <Title>{title}</Title>
+        <Text size="sm" color="dimmed" mt="xs">
+          {description}
+        </Text>
+      </Box>
       <ul
         style={{
           listStyleType: "none",
-          padding: "3em",
           display: "flex",
           flexDirection: "column",
           gap: "5px",
+          padding: 0,
         }}
       >
-        {mockData.map(
+        {listData.map(
           ({
             headline,
             subheadline,

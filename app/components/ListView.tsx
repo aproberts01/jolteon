@@ -2,13 +2,12 @@ import React from "react";
 import { useState, createRef, useEffect, useRef } from "react";
 import { Container } from "@mantine/core";
 import { Table, Title, Text, Flex, Box, Button } from "@mantine/core";
-import { list } from "../data.json";
+import { newList } from "../newData.json";
 import { reducer } from "../reducer";
 import { useImmerReducer } from "use-immer";
-import ListActions from "./ListActions";
 import { ICON_MAP, COLUMN_AMOUNT, JOLTY_VERSION } from "../utils/constants";
 import { useListDispatch, useListState } from "../ListContext";
-import { Cell, ListState } from "../reducer";
+import { ListItem, ListState } from "../reducer";
 import NewList from "./NewList";
 
 const useRefs = () => {
@@ -22,11 +21,14 @@ const useRefs = () => {
 };
 
 const ListView: React.FC = (data) => {
-  const [listData, dispatch] = useImmerReducer(reducer, list as ListState);
-  const { body, list_title }: { body: Array<Array<Cell>>; list_title: string } =
+  const [listData, dispatch] = useImmerReducer(reducer, {
+    ...newList,
+    body: [newList.body], // Wrap the body array in another array to make it two-dimensional
+  } as ListState);
+  const { body, title, description }: { body: Array<Array<ListItem>>; title: string; description: string } =
     listData;
   const [currentlyHovered, setCurrentlyHovered] = useState<number | null>(null);
-  const { refsByKey, setRef } = useRefs();
+
   const listDispatch = useListDispatch();
   let dragCount = 0;
 
@@ -102,126 +104,9 @@ const ListView: React.FC = (data) => {
     }
   };
 
-  const rows = body.map((listItem: Array<Cell>, i: number) => {
-    return (
-      <Table.Tr key={i}>
-        {listItem.slice(0, COLUMN_AMOUNT).map((cell: Cell, j: number) => {
-          const { listCellAsset } = cell;
-          const IconComponent =
-            ICON_MAP[listCellAsset as keyof typeof ICON_MAP] || null;
-          return (
-            <Table.Td
-              key={cell.id}
-              ref={(elRef) => {
-                i === 0 && setRef(elRef, j.toString());
-              }}
-            >
-              <Flex direction="row">
-                {IconComponent && <IconComponent size={40} />}
-                {cell.listCellType === "starRating" &&
-                  Array.isArray(cell.listCellAsset) && (
-                    <>
-                      {cell.listCellAsset.map((asset, i) => {
-                        const StarIcon =
-                          ICON_MAP[asset as keyof typeof ICON_MAP] || null;
-                        return <StarIcon key={`${asset}_${i}`} size={20} />;
-                      })}
-                    </>
-                  )}
-                <Box ml="sm">
-                  {cell.listCellHeadline && (
-                    <Text>{cell.listCellHeadline}</Text>
-                  )}
-                  {cell.listCellSubheadline && (
-                    <Text c="dimmed">{cell.listCellSubheadline}</Text>
-                  )}
-                </Box>
-              </Flex>
-            </Table.Td>
-          );
-        })}
-      </Table.Tr>
-    );
-  });
-
-  const generate = async () => {
-    const res = await fetch("/api/screenshot?url=http:localhost:3000");
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "screenshot.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <>
-      <ListActions />
-      {JOLTY_VERSION === 1 ? (
-        <Container
-          fluid
-          style={{
-            border: "solid 1px",
-            borderRadius: "20px",
-            padding: "20px",
-            width: "80%",
-            borderColor: "grey",
-            position: "relative",
-            paddingInline: "0px",
-          }}
-          my="sm"
-          onDragOver={(e) => e.preventDefault()}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <Title order={2} ta="center" my="lg">
-            {list_title}
-          </Title>
-          <div
-            style={{
-              position: "absolute",
-              display: "flex",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            {Array.from({ length: 5 }, (_, i) => (
-              <div
-                key={i}
-                data-column-number={i}
-                style={{
-                  flex: refsByKey[i]?.offsetWidth ? undefined : 1,
-                  backgroundColor:
-                    currentlyHovered === i
-                      ? "rgba(51, 170, 51, .1)"
-                      : undefined,
-                  width: refsByKey[i]?.offsetWidth
-                    ? `${refsByKey[i].offsetWidth}px`
-                    : "100%",
-                }}
-              ></div>
-            ))}
-          </div>
-          <Table horizontalSpacing="lg" verticalSpacing="lg" withColumnBorders>
-            <Table.Tbody>{rows}</Table.Tbody>
-            <Table.Caption>
-              Drag items into table to customize list
-            </Table.Caption>
-          </Table>
-        </Container>
-      ) : (
-        <NewList />
-      )}
-      {/* test list generation */}
-      {/* <Button id="generateButton" onClick={generate}>Generate image</Button> */}
+        <NewList title={title} description={description} listData={body.flat()} />
     </>
   );
 };

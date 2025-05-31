@@ -1,7 +1,3 @@
 .paperStyles {
-    cursor: grab;
-
-    &:active {
-        cursor: grabbing;
-    }
+    cursor: pointer
 }

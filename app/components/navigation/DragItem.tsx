@@ -1,11 +1,11 @@
 import React from "react";
-import { Paper, Flex, Avatar, Text, Box } from "@mantine/core";
+import { Paper, Flex, Avatar, Text, Box, Skeleton, Stack } from "@mantine/core";
 import { ICON_MAP } from "@/app/utils/constants";
 import { IconGripVertical, IconPhoto } from "@tabler/icons-react";
 import styles from "./NavigationStyles.module.css";
 
 interface DragItemProps {
-  onDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
+  onClick: (event: React.DragEvent<HTMLDivElement>) => void;
   dataColumnType: string;
   contentType: string;
   iconGroup?: string[];
@@ -14,25 +14,28 @@ interface DragItemProps {
 }
 
 const DragItem: React.FC<DragItemProps> = ({
-  onDragStart,
+  onClick,
   iconGroup,
   dataColumnType,
   contentType,
   headline,
   subheadline,
 }) => {
+  const isActive = dataColumnType === "basicNumberSet" || dataColumnType === "leftAlignedImage";
   return (
     <Paper
       data-column-type={dataColumnType}
-      onDragStart={onDragStart}
+      onClick={onClick}
       className={styles.paperStyles}
-      draggable={true}
       shadow="xs"
-      p={contentType === "basicListContent" ? "xs" : "md"}
+      p={contentType === "listIcons" ? "xs" : "md"}
+      withBorder={true}
+      style={{
+        borderColor: isActive ? "var(--mantine-color-violet-5)" : "grey",
+      }}
     >
-      <Flex direction="row" align="center">
-        <IconGripVertical />
-        {contentType === "basicListContent" && (
+      <Flex direction="row" justify="center" align="center">
+        {contentType === "listIcons" && (
           <Avatar.Group>
             {iconGroup?.map((componentName: string, i) => {
               let Component = ICON_MAP[componentName as keyof typeof ICON_MAP];
@@ -61,16 +64,14 @@ const DragItem: React.FC<DragItemProps> = ({
             </Box>
           </>
         )}
-        {dataColumnType === "starRating" && (
-          <Flex key={dataColumnType} direction="row">
-            {iconGroup?.map((componentName: string, i) => {
-              let StarComponent =
-                ICON_MAP[componentName as keyof typeof ICON_MAP];
-              return (
-                  <StarComponent key={`${i}_star`} />
-              );
-            })}
-          </Flex>
+        {contentType === "imageArrangement" && (
+          <>
+            <Skeleton animate={false} height={50} width={50}></Skeleton>
+            <Stack>
+              <Skeleton animate={false} width={100} height={8} ml='sm' radius="md" />
+              <Skeleton animate={false} width={180} height={8} ml='sm' radius="md" />
+            </Stack>
+          </>
         )}
       </Flex>
     </Paper>

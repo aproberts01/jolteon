@@ -7,7 +7,7 @@ import { IconEdit, IconListNumbers } from "@tabler/icons-react";
 import TabsList from "./components/navigation/TabsList";
 import MyListsContent from "./components/navigation/MyListsContent";
 import { MY_LISTS_DATA } from "./utils/mockData";
-import CustomizeListContent from "./components/navigation/CustomizeListContent";
+import NewCustomizeListContent from "./components/navigation/NewCustomizeListContent";
 import { ListProvider } from "./ListContext";
 
 export default function HomePage() {
@@ -41,7 +41,7 @@ export default function HomePage() {
                   <MyListsContent lists={MY_LISTS_DATA} />
                 </Tabs.Panel>
                 <Tabs.Panel my="lg" value="customizeList">
-                  <CustomizeListContent />
+                  <NewCustomizeListContent />
                 </Tabs.Panel>
               </Tabs>
             </div>
