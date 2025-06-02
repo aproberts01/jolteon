@@ -4,13 +4,20 @@ import { Text, ColorSwatch, Group, SimpleGrid, Flex } from "@mantine/core";
 import DragItem from "./DragItem";
 import TitleAndDescription from "./TitleAndDescription";
 import { useDispatch, useSelector } from "react-redux";
-import { updateListData, updateBackgroundColor } from "../../../lib/listSlice";
+import { updateListIcons, updateBackgroundColor, updateImageArrangement } from "../../../lib/listSlice";
 
 const NewCustomizeListContent: React.FC = () => {
   const dispatch = useDispatch();
   const currentColor = useSelector(
     (state: { list: { backgroundColor: string } }) => state.list.backgroundColor
   );
+  const currentArrangement = useSelector(
+    (state: { list: { imageArrangement: string } }) => state.list.imageArrangement
+  );
+  const currentIconSet = useSelector(
+    (state: { list: { iconSet: string } }) => state.list.iconSet
+  );
+  
   const handleOnClick = (event: React.DragEvent<HTMLDivElement>) => {
     const { currentTarget, dataTransfer } = event;
     const columnContentType = currentTarget.getAttribute("data-column-type");
@@ -18,7 +25,7 @@ const NewCustomizeListContent: React.FC = () => {
     //handle dispatch here
     if (columnContentType) {
       dispatch(
-        updateListData({
+        updateListIcons({
           columnContentType: columnContentType as keyof typeof ICON_MAP,
           dropColumnIndex: 0,
         })
@@ -67,6 +74,7 @@ const NewCustomizeListContent: React.FC = () => {
                     iconGroup={iconGroup}
                     dataColumnType={type}
                     contentType={item.value}
+                    isActive={type === currentIconSet }
                   />
                 );
               }
@@ -93,8 +101,11 @@ const NewCustomizeListContent: React.FC = () => {
             {item.items.map(({ type }: { type: string }, index: number) => {
               return (
                 <DragItem
+                  isActive={type === currentArrangement}
                   key={type}
-                  onClick={handleOnClick}
+                  onClick={() => {
+                    dispatch(updateImageArrangement(type));
+                  }}
                   dataColumnType={type}
                   contentType={item.value}
                 />
