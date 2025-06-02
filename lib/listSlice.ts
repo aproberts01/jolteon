@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { COLUMN_CONTENT_MAP } from "@/app/utils/constants";
-import data from '../app/newData.json';
+import data from "../app/newData.json";
 
 type AppState = typeof data.newList;
 
@@ -13,7 +13,6 @@ export interface ListItem {
   rankingAsset: string;
   imageUrl: string;
 }
-
 
 const listSlice = createSlice({
   name: "list",
@@ -34,15 +33,19 @@ const listSlice = createSlice({
         state.backgroundColor = newColor;
       }
     },
-    updateListData: (state, action: PayloadAction<{ columnContentType: keyof typeof COLUMN_CONTENT_MAP; dropColumnIndex: number }>) => {
+    updateListIcons: (
+      state,
+      action: PayloadAction<{
+        columnContentType: keyof typeof COLUMN_CONTENT_MAP;
+        dropColumnIndex: number;
+      }>
+    ) => {
       const { payload } = action;
-      const {
-        columnContentType,
-        dropColumnIndex,
-      } = payload;
+      const { columnContentType, dropColumnIndex } = payload;
 
       const columnContent = COLUMN_CONTENT_MAP[columnContentType];
 
+      state.iconSet = columnContent.type;
       state.body = state.body.map((listItem, index) => {
         return {
           ...listItem,
@@ -52,8 +55,19 @@ const listSlice = createSlice({
         };
       });
     },
+    updateImageArrangement: (state, action: PayloadAction<string>) => {
+      const newArrangement = action.payload;
+      if (state.imageArrangement !== newArrangement) {
+        state.imageArrangement = newArrangement;
+      }
+    },
   },
 });
 
-export const { updateListData, updateTitleAndDescription, updateBackgroundColor } = listSlice.actions;
+export const {
+  updateListIcons,
+  updateTitleAndDescription,
+  updateBackgroundColor,
+  updateImageArrangement,
+} = listSlice.actions;
 export default listSlice.reducer;

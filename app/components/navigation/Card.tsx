@@ -6,9 +6,11 @@ import {
   BackgroundImage,
   Overlay,
   AspectRatio,
+  Flex,
 } from "@mantine/core";
 import styles from "../../styles.module.css";
 import { ICON_MAP } from "@/app/utils/constants";
+import { useSelector } from "react-redux";
 
 interface CardProps {
   key: number;
@@ -29,12 +31,16 @@ const Card: React.FC<CardProps> = ({
   imageUrl,
 }) => {
   const IconComponent = ICON_MAP[rankingAsset as keyof typeof ICON_MAP] || null;
+  const imageArrangement = useSelector(
+    (state: { list: { imageArrangement: string } }) =>
+      state.list.imageArrangement
+  );
   return (
     <li className={styles.listContainer}>
       <Box
         style={{
-          width: '250px',
-          height: '141px',
+          width: `${imageArrangement === "fullWidthImage" ? "100%" : "250px"}`,
+          height: "141px",
           overflow: "hidden",
         }}
       >
@@ -43,7 +49,11 @@ const Card: React.FC<CardProps> = ({
             <BackgroundImage
               src={imageUrl}
               p="xs"
-              style={{ height: "100%", width: "100%" }}
+              style={{
+                height: "100%",
+                width: "100%",
+                backgroundPosition: "center",
+              }}
             >
               <Overlay
                 p="sm"
@@ -51,18 +61,42 @@ const Card: React.FC<CardProps> = ({
                 opacity={0.85}
                 zIndex="0"
               >
-                <IconComponent color="var(--mantine-color-dark-0)" size={25} />
+                {imageArrangement === "fullWidthImage" ? (
+                  <Flex>
+                    <IconComponent
+                      color="var(--mantine-color-dark-0)"
+                      size={25}
+                    />
+                    <Box mt="sm" mx="lg">
+                      <Title order={4}>{headline}</Title>
+                      <Box>{"*".repeat(starRating)}</Box>
+                      <Text size="sm" c="dimmed">
+                        {subheadline}
+                      </Text>
+                      <Text size="sm">{description}</Text>
+                    </Box>
+                  </Flex>
+                ) : (
+                  <IconComponent
+                    color="var(--mantine-color-dark-0)"
+                    size={25}
+                  />
+                )}
               </Overlay>
             </BackgroundImage>
           )}
         </AspectRatio>
       </Box>
-      <Box m="lg">
-        <Title order={4}>{headline}</Title>
-        <Box>{"*".repeat(starRating)}</Box>
-        <Text size="sm" c="dimmed">{subheadline}</Text>
-        <Text size="sm">{description}</Text>
-      </Box>
+      {imageArrangement === "leftAlignedImage" && (
+        <Box m="lg">
+          <Title order={4}>{headline}</Title>
+          <Box>{"*".repeat(starRating)}</Box>
+          <Text size="sm" c="dimmed">
+            {subheadline}
+          </Text>
+          <Text size="sm">{description}</Text>
+        </Box>
+      )}
     </li>
   );
 };

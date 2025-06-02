@@ -8,6 +8,7 @@ interface DragItemProps {
   onClick: (event: React.DragEvent<HTMLDivElement>) => void;
   dataColumnType: string;
   contentType: string;
+  isActive: boolean;
   iconGroup?: string[];
   headline?: string;
   subheadline?: string;
@@ -20,8 +21,8 @@ const DragItem: React.FC<DragItemProps> = ({
   contentType,
   headline,
   subheadline,
+  isActive
 }) => {
-  const isActive = dataColumnType === "basicNumberSet" || dataColumnType === "leftAlignedImage";
   return (
     <Paper
       data-column-type={dataColumnType}
@@ -64,13 +65,18 @@ const DragItem: React.FC<DragItemProps> = ({
             </Box>
           </>
         )}
-        {contentType === "imageArrangement" && (
+        {dataColumnType === "leftAlignedImage" && (
           <>
             <Skeleton animate={false} height={50} width={50}></Skeleton>
             <Stack>
               <Skeleton animate={false} width={100} height={8} ml='sm' radius="md" />
               <Skeleton animate={false} width={180} height={8} ml='sm' radius="md" />
             </Stack>
+          </>
+        )}
+        {dataColumnType === "fullWidthImage" && (
+          <>
+            <Skeleton animate={false} height={50} width={250}></Skeleton>
           </>
         )}
       </Flex>

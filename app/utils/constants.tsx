@@ -42,6 +42,7 @@ export const JOLTY_VERSION: number = 2;
 export interface ColumnContentMap {
   [key: string]: {
     type: string;
+    property: string;
     iconGroup?: string[] | string[][];
     headline?: string;
     subheadline?: string;
@@ -51,6 +52,7 @@ export interface ColumnContentMap {
 export const COLUMN_CONTENT_MAP: ColumnContentMap = {
   basicNumberSet: {
     type: "basicNumberSet",
+    property: "rankingAsset",
     iconGroup: [
       "IconNumber1",
       "IconNumber2",
@@ -61,6 +63,7 @@ export const COLUMN_CONTENT_MAP: ColumnContentMap = {
   },
   rankNumberSet: {
     type: "rankNumberSet",
+    property: "rankingAsset",
     iconGroup: [
       "IconSquareRoundedNumber1",
       "IconSquareRoundedNumber2",
@@ -71,6 +74,7 @@ export const COLUMN_CONTENT_MAP: ColumnContentMap = {
   },
   imageSet: {
     type: "imageSet",
+    property: "rankingAsset",
     iconGroup: [
       "IconPhoto",
       "IconPhoto",
@@ -81,6 +85,7 @@ export const COLUMN_CONTENT_MAP: ColumnContentMap = {
   },
   checkboxSet: {
     type: "checkboxSet",
+    property: "rankingAsset",
     iconGroup: [
       "IconSquareCheck",
       "IconSquareCheck",
@@ -89,67 +94,17 @@ export const COLUMN_CONTENT_MAP: ColumnContentMap = {
       "IconSquareCheck",
     ],
   },
-  oneLineSimpleText: {
-    type: "oneLineSimpleText",
-    headline: "One-line simple text",
+  leftAlignedImage: {
+    type: "leftAlignedImage",
+    property: "imageArrangement",
+    iconGroup: [],
+
   },
-  twoLineSimpleText: {
-    type: "twoLineSimpleText",
-    headline: "Two-line simple text",
-    subheadline: "Your second line goes here",
-  },
-  twoLineWithImage: {
-    type: "twoLineWithImage",
-    headline: "Two-line with image",
-    subheadline: "Your second line goes here",
-    iconGroup: [
-      "IconPhoto",
-      "IconPhoto",
-      "IconPhoto",
-      "IconPhoto",
-      "IconPhoto",
-    ],
-  },
-  starRating: {
-    type: "starRating",
-    iconGroup: [
-      [
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarHalfFilled",
-        "IconStar",
-      ],
-      [
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarHalfFilled",
-        "IconStar",
-      ],
-      [
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarHalfFilled",
-        "IconStar",
-      ],
-      [
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarHalfFilled",
-        "IconStar",
-      ],
-      [
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarFilled",
-        "IconStarHalfFilled",
-        "IconStar",
-      ],
-    ],
-  },
+  fullWidthImage: {
+    type: "fullWidthImage",
+    property: "imageArrangement",
+    iconGroup: [],
+  }
 };
 
 export const CUSTOMIZE_PANEL = [
