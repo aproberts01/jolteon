@@ -7,13 +7,14 @@ import { IconEdit, IconListNumbers } from "@tabler/icons-react";
 import TabsList from "./components/navigation/TabsList";
 import MyListsContent from "./components/navigation/MyListsContent";
 import { MY_LISTS_DATA } from "./utils/mockData";
-import CustomizeListContent from "./components/navigation/CustomizeListContent";
-import { ListProvider } from "./ListContext";
+import NewCustomizeListContent from "./components/navigation/NewCustomizeListContent";
+import { Provider } from 'react-redux';
+import store from '../lib/store';
 
 export default function HomePage() {
   return (
-    <ListProvider>
-      <Grid>
+    <Provider store={store}>
+      <Grid gutter={0}>
         <Grid.Col span={2}>
           <nav className={classes.navbar}>
             <div className={classes.navbarMain}>
@@ -41,7 +42,7 @@ export default function HomePage() {
                   <MyListsContent lists={MY_LISTS_DATA} />
                 </Tabs.Panel>
                 <Tabs.Panel my="lg" value="customizeList">
-                  <CustomizeListContent />
+                  <NewCustomizeListContent />
                 </Tabs.Panel>
               </Tabs>
             </div>
@@ -61,6 +62,6 @@ export default function HomePage() {
           <ListView />
         </Grid.Col>
       </Grid>
-    </ListProvider>
+    </Provider>
   );
 }
