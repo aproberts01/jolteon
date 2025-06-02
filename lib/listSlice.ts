@@ -19,11 +19,20 @@ const listSlice = createSlice({
   name: "list",
   initialState: data.newList as AppState,
   reducers: {
-    updateListTitle: (state, action) => {
-      state.title = action.payload;
+    updateTitleAndDescription: (state, action) => {
+      const { title, description } = action.payload;
+      if (state.title !== title) {
+        state.title = title;
+      }
+      if (state.description !== description) {
+        state.description = description;
+      }
     },
-    updateListDescription: (state, action) => {
-      state.description = action.payload;
+    updateBackgroundColor: (state, action: PayloadAction<string>) => {
+      const newColor = action.payload;
+      if (state.backgroundColor !== newColor) {
+        state.backgroundColor = newColor;
+      }
     },
     updateListData: (state, action: PayloadAction<{ columnContentType: keyof typeof COLUMN_CONTENT_MAP; dropColumnIndex: number }>) => {
       const { payload } = action;
@@ -46,5 +55,5 @@ const listSlice = createSlice({
   },
 });
 
-export const { updateListData, updateListTitle, updateListDescription } = listSlice.actions;
+export const { updateListData, updateTitleAndDescription, updateBackgroundColor } = listSlice.actions;
 export default listSlice.reducer;

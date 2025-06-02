@@ -4,6 +4,7 @@ import styles from "../styles.module.css";
 import { IconNumber1 } from "@tabler/icons-react";
 import Card from "./navigation/Card";
 import ListGenerateAction from "./ListGenerateAction";
+import { useSelector } from "react-redux";
 
 interface ListItems {
   id: number;
@@ -22,6 +23,10 @@ interface NewListProps {
 }
 
 const NewList: React.FC<NewListProps> = ({ title, description, listData }) => {
+  const backgroundColor = useSelector(
+    (state: { list: { backgroundColor: string } }) => state.list.backgroundColor
+  );
+  const defaultBackgroundColor = "transparent";
   return (
     <Container
       fluid
@@ -32,10 +37,11 @@ const NewList: React.FC<NewListProps> = ({ title, description, listData }) => {
         borderColor: "grey",
         position: "relative",
         paddingInline: "0px",
-        height: "calc(100vh - var(--mantine-spacing-sm) * 2)",
+        height: "calc(100vh - var(--mantine-spacing-md) * 2)",
         overflowY: "auto",
+        backgroundColor: backgroundColor || defaultBackgroundColor,
       }}
-      my="sm"
+      my="md"
       px="xl"
       id="list-selector"
     >

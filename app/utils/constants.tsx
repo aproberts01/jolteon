@@ -225,7 +225,7 @@ export const NEW_CUSTOMIZE_PANEL = [
   {
     value: "backgroundColor",
     heading: "Background Color",
-    colorSwatches: ["#009790", "#ffe8d5", "#f08080"],
+    colorSwatches: ["transparent", "#009790", "#ffe8d5", "#f08080"],
   },
   {
     value: "listIcons",

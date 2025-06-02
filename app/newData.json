@@ -6,6 +6,7 @@
       "registered": true,
       "owner": "owner123",
       "description": "A list of the greatest films ever made, as voted by film critics and enthusiasts.",
+      "backgroundColor": "transparent",
       "body": [
         {
           "id": 1,

@@ -1,49 +1,35 @@
 import React from "react";
 import { NEW_CUSTOMIZE_PANEL, ICON_MAP } from "@/app/utils/constants";
-import {
-  Text,
-  ColorSwatch,
-  Group,
-  SimpleGrid,
-  Flex,
-  Fieldset,
-  TextInput,
-  Textarea,
-  Button,
-} from "@mantine/core";
+import { Text, ColorSwatch, Group, SimpleGrid, Flex } from "@mantine/core";
 import DragItem from "./DragItem";
-
-import { useSelector, useDispatch } from 'react-redux';
-import { updateListData } from "../../../lib/listSlice"
-
+import TitleAndDescription from "./TitleAndDescription";
+import { useDispatch, useSelector } from "react-redux";
+import { updateListData, updateBackgroundColor } from "../../../lib/listSlice";
 
 const NewCustomizeListContent: React.FC = () => {
   const dispatch = useDispatch();
+  const currentColor = useSelector(
+    (state: { list: { backgroundColor: string } }) => state.list.backgroundColor
+  );
   const handleOnClick = (event: React.DragEvent<HTMLDivElement>) => {
     const { currentTarget, dataTransfer } = event;
     const columnContentType = currentTarget.getAttribute("data-column-type");
 
     //handle dispatch here
     if (columnContentType) {
-      dispatch(updateListData({
-        columnContentType: columnContentType as keyof typeof ICON_MAP,
-        dropColumnIndex: 0,
-      }));
+      dispatch(
+        updateListData({
+          columnContentType: columnContentType as keyof typeof ICON_MAP,
+          dropColumnIndex: 0,
+        })
+      );
     }
   };
 
   const renderCustomizePanel = (item: any) => {
     switch (item.value) {
       case "title":
-        return (
-          <Fieldset legend="Title & Description" my="xs">
-            <TextInput placeholder="Title" />
-            <Textarea mt="sm" placeholder="Description" />
-            <Button mt="sm" size="xs">
-              Save
-            </Button>
-          </Fieldset>
-        );
+        return <TitleAndDescription />;
       case "backgroundColor":
         return (
           <Group my="xs">
@@ -52,6 +38,16 @@ const NewCustomizeListContent: React.FC = () => {
                 component="button"
                 key={`${index}_swatch`}
                 color={color}
+                onClick={() => {
+                  dispatch(updateBackgroundColor(color));
+                }}
+                style={{
+                  cursor: "pointer",
+                  border:
+                    currentColor === color
+                      ? "solid 1px var(--mantine-color-violet-5)"
+                      : "transparent",
+                }}
               />
             ))}
           </Group>
