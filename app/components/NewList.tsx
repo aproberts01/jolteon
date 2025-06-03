@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Title, Text, Box } from "@mantine/core";
 import styles from "../styles.module.css";
 import { IconNumber1 } from "@tabler/icons-react";
-import Card from "./navigation/Card";
+import Card from "./Card";
 import ListGenerateAction from "./ListGenerateAction";
 import { useSelector } from "react-redux";
 

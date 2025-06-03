@@ -8,7 +8,7 @@ import {
   AspectRatio,
   Flex,
 } from "@mantine/core";
-import styles from "../../styles.module.css";
+import styles from "../styles.module.css";
 import { ICON_MAP } from "@/app/utils/constants";
 import { useSelector } from "react-redux";
 

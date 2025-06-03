@@ -6,6 +6,7 @@ import {
   mantineHtmlProps,
 } from "@mantine/core";
 import { theme } from "../theme";
+import Providers from "./providers";
 
 export const metadata = {
   title: "⚡Jolty",
@@ -23,9 +24,11 @@ export default function RootLayout({ children }: { children: any }) {
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
       </head>
-      <body>
-        <MantineProvider defaultColorScheme="dark" theme={theme}>{children}</MantineProvider>
-      </body>
+      <Providers>
+        <body>
+          <MantineProvider defaultColorScheme="dark" theme={theme}>{children}</MantineProvider>
+        </body>
+      </Providers>
     </html>
   );
 }
