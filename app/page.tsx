@@ -1,5 +1,5 @@
 "use client";
-import { Group, Avatar, Tabs } from "@mantine/core";
+import { Group, Avatar, Tabs, Menu } from "@mantine/core";
 import classes from "./styles.module.css";
 import ListView from "./components/ListView";
 import { Grid, Badge } from "@mantine/core";
@@ -8,10 +8,14 @@ import TabsList from "./components/navigation/TabsList";
 import MyListsContent from "./components/navigation/MyListsContent";
 import { MY_LISTS_DATA } from "./utils/mockData";
 import NewCustomizeListContent from "./components/navigation/NewCustomizeListContent";
-import { Provider } from 'react-redux';
-import store from '../lib/store';
+import { Provider } from "react-redux";
+import store from "../lib/store";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { UserButton } from "./components/UserButton";
+import { GoogleButton } from "./components/GoogleButton";
 
 export default function HomePage() {
+  const { data: session } = useSession();
   return (
     <Provider store={store}>
       <Grid gutter={0}>
@@ -47,15 +51,13 @@ export default function HomePage() {
               </Tabs>
             </div>
 
-            <div className={classes.footer}>
-              <a
-                href="#"
-                className={classes.link}
-                onClick={(event) => event.preventDefault()}
-              >
-                <span>Logout</span>
-              </a>
-            </div>
+            {session && session.user ? (
+              <UserButton user={session.user} signOut={() => signOut()} />
+            ) : (
+              <div>
+                <GoogleButton signIn={() => signIn("google")} />
+              </div>
+            )}
           </nav>
         </Grid.Col>
         <Grid.Col span={10}>
