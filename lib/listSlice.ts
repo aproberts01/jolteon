@@ -46,7 +46,7 @@ const listSlice = createSlice({
       const columnContent = COLUMN_CONTENT_MAP[columnContentType];
 
       state.iconSet = columnContent.type;
-      state.body = state.body.map((listItem, index) => {
+      state.items = state.items.map((listItem, index) => {
         return {
           ...listItem,
           rankingAsset: Array.isArray(columnContent.iconGroup?.[index])

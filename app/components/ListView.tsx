@@ -13,8 +13,8 @@ export interface ListItem {
 }
 
 const ListView: React.FC = () => {
-  const body = useSelector(
-    (state: { list: { body: Array<ListItem> } }) => state.list.body
+  const listItems = useSelector(
+    (state: { list: { items: Array<ListItem> } }) => state.list.items
   );
   const title = useSelector(
     (state: { list: { title: string } }) => state.list.title
@@ -25,7 +25,7 @@ const ListView: React.FC = () => {
 
   return (
     <>
-      <NewList title={title} description={description} listData={body} />
+      <NewList title={title} description={description} listData={listItems} />
     </>
   );
 };

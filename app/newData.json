@@ -1,60 +1,60 @@
 {
-    "newList": {
-      "id": 1,
-      "title": "Top 5 Movies of All Time",
-      "creationDate": "1980-01-02T00:00:00.000Z",
-      "registered": true,
-      "owner": "owner123",
-      "description": "A list of the greatest films ever made, as voted by film critics and enthusiasts.",
-      "backgroundColor": "transparent",
-      "imageArrangement": "leftAlignedImage",
-      "iconSet": "basicNumberSet",
-      "body": [
-        {
-          "id": 1,
-          "starRating": 5,
-          "headline": "Deadpool",
-          "subheadline": "Marvel Comics",
-          "description": "A hilarious anti-hero movie with Ryan Reynolds.",
-          "rankingAsset": "IconNumber1",
-          "imageUrl": "/assets/climbing_girl.jpg"
-        },
-        {
-          "id": 2,
-          "starRating": 4,
-          "headline": "The Dark Knight",
-          "subheadline": "DC Comics",
-          "description": "A gripping tale of Batman's fight against the Joker.",
-          "rankingAsset": "IconNumber2",
-          "imageUrl": "/assets/fencing.jpg"
-        },
-        {
-          "id": 3,
-          "starRating": 4,
-          "headline": "The Godfather",
-          "subheadline": "Paramount Pictures",
-          "description": "A classic crime drama about the Corleone family.",
-          "rankingAsset": "IconNumber3",
-          "imageUrl": "/assets/skateboarder.jpg"
-        },
-        {
-          "id": 4,
-          "starRating": 3,
-          "headline": "Inception",
-          "subheadline": "Warner Bros.",
-          "description": "A mind-bending thriller about dreams within dreams.",
-          "rankingAsset": "IconNumber4",
-          "imageUrl": "/assets/swim_girls.jpg"
-        },
-        {
-          "id": 5,
-          "starRating": 5,
-          "headline": "Interstellar",
-          "subheadline": "Paramount Pictures",
-          "description": "A visually stunning journey through space and time.",
-          "rankingAsset": "IconNumber5",
-          "imageUrl": "/assets/horse_girl.jpg"
-        }
-      ]
-    }
+  "newList": {
+    "id": "newList123",
+    "title": "Top 5 Movies of All Time",
+    "createdAt": "1980-01-02T00:00:00.000Z",
+    "updatedAt": "2023-10-01T12:00:00.000Z",
+    "owner": "owner123",
+    "description": "A list of the greatest films ever made, as voted by film critics and enthusiasts.",
+    "backgroundColor": "transparent",
+    "imageArrangement": "leftAlignedImage",
+    "iconSet": "basicNumberSet",
+    "items": [
+      {
+        "id": "1",
+        "starRating": "5",
+        "headline": "Deadpool",
+        "subHeadline": "Marvel Comics",
+        "description": "A hilarious anti-hero movie with Ryan Reynolds.",
+        "rankingAsset": "IconNumber1",
+        "imageUrl": "/assets/climbing_girl.jpg"
+      },
+      {
+        "id": "2",
+        "starRating": "4",
+        "headline": "The Dark Knight",
+        "subHeadline": "DC Comics",
+        "description": "A gripping tale of Batman's fight against the Joker.",
+        "rankingAsset": "IconNumber2",
+        "imageUrl": "/assets/fencing.jpg"
+      },
+      {
+        "id": "3",
+        "starRating": "4",
+        "headline": "The Godfather",
+        "subHeadline": "Paramount Pictures",
+        "description": "A classic crime drama about the Corleone family.",
+        "rankingAsset": "IconNumber3",
+        "imageUrl": "/assets/skateboarder.jpg"
+      },
+      {
+        "id": "4",
+        "starRating": "3",
+        "headline": "Inception",
+        "subHeadline": "Warner Bros.",
+        "description": "A mind-bending thriller about dreams within dreams.",
+        "rankingAsset": "IconNumber4",
+        "imageUrl": "/assets/swim_girls.jpg"
+      },
+      {
+        "id": "5",
+        "starRating": "5",
+        "headline": "Interstellar",
+        "subHeadline": "Paramount Pictures",
+        "description": "A visually stunning journey through space and time.",
+        "rankingAsset": "IconNumber5",
+        "imageUrl": "/assets/horse_girl.jpg"
+      }
+    ]
+  }
 }
