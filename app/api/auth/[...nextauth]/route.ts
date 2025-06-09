@@ -1,11 +1,17 @@
-import NextAuth from 'next-auth';
+import NextAuth, { AuthOptions, DefaultSession, NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from "../../../../prisma"
 
 export const runtime = 'nodejs';
 
-export const authOptions = {
+interface Session {
+  user: {
+    id?: string 
+  } & DefaultSession['user'];
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -14,6 +20,27 @@ export const authOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user && token) {
+        (session.user as Session['user']).id = token.sub;
+      }
+      return session;
+    },
+    async redirect({ baseUrl, url }: { baseUrl: string; url: string }) {
+      // Redirect to editor with userId (this only works if user is already signed in)
+      return 'http://localhost:3000' + '/redirecting'; // Temporary route that will redirect with session
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

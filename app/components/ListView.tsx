@@ -1,6 +1,8 @@
+'use client';
 import React from "react";
 import NewList from "./NewList";
 import { useSelector } from "react-redux";
+import { Grid } from "@mantine/core";
 
 export interface ListItem {
   id: number;
@@ -24,9 +26,9 @@ const ListView: React.FC = () => {
   );
 
   return (
-    <>
+    <Grid.Col span={10}>
       <NewList title={title} description={description} listData={listItems} />
-    </>
+    </Grid.Col>
   );
 };
 

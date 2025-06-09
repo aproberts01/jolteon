@@ -6,7 +6,7 @@ function GoogleIcon(props: React.ComponentPropsWithoutRef<"svg">) {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 256 262"
-      style={{ width: 14, height: 14 }}
+      style={{ width: 20, height: 20 }}
       {...props}
     >
       <path
@@ -37,10 +37,16 @@ export function GoogleButton({
     <Button
       onClick={signIn}
       leftSection={<GoogleIcon />}
-      variant="default"
-      size="md"
-      fullWidth={true}
       {...props}
-    />
+      variant="gradient"
+      gradient={{
+        from: "var(--mantine-color-dark-8)",
+        to: "var(--mantine-color-dark-5)",
+      }}
+      size="xl"
+      mt={40}
+    >
+      Sign in with Google
+    </Button>
   );
 }

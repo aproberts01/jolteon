@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from "react";
 import { Fieldset, TextInput, Textarea, Button, Stack } from "@mantine/core";
 import { useSelector, useDispatch } from "react-redux";
