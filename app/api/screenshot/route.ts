@@ -3,7 +3,7 @@ import puppeteer from "puppeteer";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const url = searchParams.get("url") || "https://example.com";
+  const url = searchParams.get("url") || "";
 
   let browser;
 

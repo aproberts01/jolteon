@@ -2,39 +2,88 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { COLUMN_CONTENT_MAP } from "@/app/utils/constants";
 import data from "../app/newData.json";
 
-type AppState = typeof data.newList;
+interface AppState {
+  list: ListState | null;
+  loading: boolean;
+  error: null | string;
+}
 
 export interface ListItem {
-  id: number;
-  starRating: number;
+  id: string;
+  starRating: string;
   headline: string;
-  subheadline: string;
+  subHeadline: string;
   description: string;
   rankingAsset: string;
   imageUrl: string;
+  updatedAt: Date | null;
 }
+
+export interface ListState {
+  id: string;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  title: string;
+  description: string;
+  backgroundColor: string;
+  imageArrangement: string;
+  iconSet: string;
+  owner: string;
+  items: ListItem[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+const initialState: ListState = {
+  id: "",
+  createdAt: null,
+  updatedAt: null,
+  title: "",
+  description: "",
+  backgroundColor: "transparent",
+  imageArrangement: "leftAlignedImage",
+  iconSet: "basicNumberSet",
+  owner: "",
+  items: [],
+  loading: false,
+  error: null,
+};
 
 const listSlice = createSlice({
   name: "list",
-  initialState: data.newList as AppState,
+  initialState: initialState,
   reducers: {
-    updateTitleAndDescription: (state, action) => {
+    setList: (state, action) => {
+      const { payload: newList } = action;
+      return newList
+    },
+    updateTitleAndDescription: (
+      { title: listTitle, description: listDescription },
+      action
+    ) => {
       const { title, description } = action.payload;
-      if (state.title !== title) {
-        state.title = title;
+
+      if (!listTitle || !listDescription) return;
+
+      if (listTitle !== title) {
+        listTitle = title;
       }
-      if (state.description !== description) {
-        state.description = description;
+
+      if (listDescription !== description) {
+        listDescription = description;
       }
     },
-    updateBackgroundColor: (state, action: PayloadAction<string>) => {
-      const newColor = action.payload;
-      if (state.backgroundColor !== newColor) {
-        state.backgroundColor = newColor;
+    updateBackgroundColor: ({ backgroundColor: listBackgroundColor  }, action: PayloadAction<string>) => {
+      const { payload: newColor } = action;
+
+      if (!listBackgroundColor) return;
+
+      if (listBackgroundColor !== newColor) {
+        listBackgroundColor = newColor;
       }
     },
     updateListIcons: (
-      state,
+      { iconSet: listIconSet, items: listItems },
       action: PayloadAction<{
         columnContentType: keyof typeof COLUMN_CONTENT_MAP;
         dropColumnIndex: number;
@@ -42,11 +91,11 @@ const listSlice = createSlice({
     ) => {
       const { payload } = action;
       const { columnContentType, dropColumnIndex } = payload;
-
       const columnContent = COLUMN_CONTENT_MAP[columnContentType];
 
-      state.iconSet = columnContent.type;
-      state.items = state.items.map((listItem, index) => {
+
+      listIconSet = columnContent.type;
+      listItems = listItems.map((listItem, index) => {
         return {
           ...listItem,
           rankingAsset: Array.isArray(columnContent.iconGroup?.[index])
@@ -55,10 +104,13 @@ const listSlice = createSlice({
         };
       });
     },
-    updateImageArrangement: (state, action: PayloadAction<string>) => {
+    updateImageArrangement: ({ imageArrangement: listImageArrangement }, action: PayloadAction<string>) => {
       const newArrangement = action.payload;
-      if (state.imageArrangement !== newArrangement) {
-        state.imageArrangement = newArrangement;
+
+      if (!listImageArrangement) return;
+
+      if (listImageArrangement !== newArrangement) {
+        listImageArrangement = newArrangement;
       }
     },
   },
@@ -69,5 +121,6 @@ export const {
   updateTitleAndDescription,
   updateBackgroundColor,
   updateImageArrangement,
+  setList,
 } = listSlice.actions;
 export default listSlice.reducer;

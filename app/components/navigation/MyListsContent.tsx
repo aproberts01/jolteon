@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Card, Button } from "@mantine/core";
 
 interface ListItem {
-  id: number;
+  id: string;
   listTitle: string;
   listDescription: string;
   createdAt: string;

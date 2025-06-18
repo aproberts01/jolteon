@@ -1,4 +1,4 @@
-import { Grid } from "@mantine/core";
+import { Grid, Loader } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { prisma } from "../../../prisma";
 
@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import Nav from "../../components/navigation/Nav";
-import Providers from "../../providers"
+import Providers from "../../providers";
 interface Props {
   params: { userId: string };
 }
@@ -20,10 +20,16 @@ export default async function Editor({ params }: Props) {
   if (!session) redirect("/");
   if (session.user.id !== userId) notFound();
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    include: { lists: { include: { items: true } } },
-  });
+  let user;
+  try {
+    user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { lists: { include: { items: true } } },
+    });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    notFound();
+  }
 
   if (!user) notFound();
 
@@ -33,7 +39,7 @@ export default async function Editor({ params }: Props) {
     <Grid gutter={0}>
       <Providers>
         <Nav user={user} />
-        <ListView />
+        {lists && lists.length > 0 ? <ListView listData={lists} /> : <Loader />}
       </Providers>
     </Grid>
   );

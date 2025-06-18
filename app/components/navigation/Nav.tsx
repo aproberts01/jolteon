@@ -8,13 +8,13 @@ import MyListsContent from "../../components/navigation/MyListsContent";
 import NewCustomizeListContent from "../../components/navigation/NewCustomizeListContent";
 import { MY_LISTS_DATA } from "../../utils/mockData";
 import { UserButton } from "../../components/UserButton";
+import { signOut } from "next-auth/react";
 
 interface NavProps {
   user: any;
-  signOut: () => void;
 }
 
-const Nav: React.FC<NavProps> = ({ user, signOut }) => {
+const Nav: React.FC<NavProps> = ({ user }) => {
   return (
     <Grid.Col span={2}>
       <nav className={classes.navbar}>
@@ -48,7 +48,7 @@ const Nav: React.FC<NavProps> = ({ user, signOut }) => {
           </Tabs>
         </div>
 
-        {/* {user && <UserButton user={user} signOut={signOut} />} */}
+        {user && <UserButton user={user} signOut={() => signOut()} />}
       </nav>
     </Grid.Col>
   );

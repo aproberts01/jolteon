@@ -3,27 +3,18 @@ import { Container, Title, Text, Box } from "@mantine/core";
 import Card from "./Card";
 import ListGenerateAction from "./ListGenerateAction";
 import { useSelector } from "react-redux";
+import { ListItem } from "../../lib/listSlice";
 
-interface ListItems {
-  id: number;
-  starRating: number;
-  headline: string;
-  subheadline: string;
-  description: string;
-  rankingAsset: string;
-  imageUrl: string;
-}
-
-interface NewListProps {
-  title: string;
-  description: string;
-  listData: ListItems[];
-}
-
-const NewList: React.FC<NewListProps> = ({ title, description, listData }) => {
+const NewList: React.FC = () => {
   const backgroundColor = useSelector(
-    (state: { list: { backgroundColor: string } }) => state.list.backgroundColor
+    (state: { list: { backgroundColor: string } }) => state.list?.backgroundColor
   );
+  const title = useSelector((state: any) => state.list?.title);
+  const description = useSelector((state: any) => state.list?.description);
+  const listItems = useSelector(
+    (state: { list: { items: ListItem[] }  }) => state.list?.items
+  );
+
   const defaultBackgroundColor = "transparent";
   return (
     <Container
@@ -67,27 +58,28 @@ const NewList: React.FC<NewListProps> = ({ title, description, listData }) => {
           padding: 0,
         }}
       >
-        {listData.map(
-          ({
-            headline,
-            subheadline,
-            starRating,
-            description,
-            rankingAsset,
-            imageUrl,
-            id,
-          }) => (
-            <Card
-              headline={headline}
-              subheadline={subheadline}
-              starRating={starRating}
-              description={description}
-              rankingAsset={rankingAsset}
-              imageUrl={imageUrl}
-              key={id}
-            />
-          )
-        )}
+        {listItems &&
+          listItems.map(
+            ({
+              headline,
+              subHeadline,
+              starRating,
+              description,
+              rankingAsset,
+              imageUrl,
+              id,
+            }) => (
+              <Card
+                headline={headline}
+                subHeadline={subHeadline}
+                starRating={starRating}
+                description={description}
+                rankingAsset={rankingAsset}
+                imageUrl={imageUrl}
+                key={id}
+              />
+            )
+          )}
       </ul>
     </Container>
   );

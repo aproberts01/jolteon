@@ -1,9 +1,7 @@
 import React from "react";
-import { ActionIcon, Group } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 import {
   IconTableShare,
-  IconDeviceFloppy,
-  IconHeart,
 } from "@tabler/icons-react";
 
 const ListGenerateAction: React.FC = ({}) => {

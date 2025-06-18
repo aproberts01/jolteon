@@ -13,10 +13,10 @@ import { ICON_MAP } from "@/app/utils/constants";
 import { useSelector } from "react-redux";
 
 interface CardProps {
-  key: number;
+  key: string;
   headline: string;
-  subheadline: string;
-  starRating: number;
+  subHeadline: string;
+  starRating: string;
   description: string;
   rankingAsset?: string;
   imageUrl?: string;
@@ -24,17 +24,32 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({
   headline,
-  subheadline,
+  subHeadline,
   starRating,
   description,
   rankingAsset,
   imageUrl,
 }) => {
   const IconComponent = ICON_MAP[rankingAsset as keyof typeof ICON_MAP] || null;
+
+  const generateStars = (rating: number) => {
+    const filledStar = ICON_MAP.IconStarFilled;
+    const emptyStar = ICON_MAP.IconStar;
+
+    return Array.from({ length: 5 }, (_, i) => {
+      const starIcon = i < rating ? filledStar : emptyStar;
+      return React.createElement(starIcon, {
+        key: i,
+        color: "var(--mantine-color-yellow-2)",
+        size: 12,
+      });
+    });
+  };
+
   const imageArrangement = useSelector(
-    (state: { list: { imageArrangement: string } }) =>
-      state.list.imageArrangement
+    (state: { list: { imageArrangement: string } }) => state.list?.imageArrangement
   );
+
   return (
     <li className={styles.listContainer}>
       <Box
@@ -69,9 +84,9 @@ const Card: React.FC<CardProps> = ({
                     />
                     <Box mt="sm" mx="lg">
                       <Title order={4}>{headline}</Title>
-                      <Box>{"*".repeat(starRating)}</Box>
+                      <Box>{generateStars(Number(starRating))}</Box>
                       <Text size="sm" c="dimmed">
-                        {subheadline}
+                        {subHeadline}
                       </Text>
                       <Text size="sm">{description}</Text>
                     </Box>
@@ -90,9 +105,9 @@ const Card: React.FC<CardProps> = ({
       {imageArrangement === "leftAlignedImage" && (
         <Box m="lg">
           <Title order={4}>{headline}</Title>
-          <Box>{"*".repeat(starRating)}</Box>
+          <Box>{generateStars(Number(starRating))}</Box>
           <Text size="sm" c="dimmed">
-            {subheadline}
+            {subHeadline}
           </Text>
           <Text size="sm">{description}</Text>
         </Box>
