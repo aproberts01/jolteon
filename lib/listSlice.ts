@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { COLUMN_CONTENT_MAP } from "@/app/utils/constants";
-import data from "../app/newData.json";
-
-interface AppState {
-  list: ListState | null;
-  loading: boolean;
-  error: null | string;
-}
 
 export interface ListItem {
   id: string;
@@ -32,6 +25,9 @@ export interface ListState {
   items: ListItem[];
   loading?: boolean;
   error?: string | null;
+  modalOpen?: boolean;
+  itemModalOpen?: boolean;
+  currentlySelectedItem?: ListItem | null;
 }
 
 const initialState: ListState = {
@@ -47,6 +43,9 @@ const initialState: ListState = {
   items: [],
   loading: false,
   error: null,
+  modalOpen: false,
+  itemModalOpen: false,
+  currentlySelectedItem: null,
 };
 
 const listSlice = createSlice({
@@ -55,35 +54,32 @@ const listSlice = createSlice({
   reducers: {
     setList: (state, action) => {
       const { payload: newList } = action;
-      return newList
+      return newList;
     },
-    updateTitleAndDescription: (
-      { title: listTitle, description: listDescription },
-      action
-    ) => {
+    updateTitleAndDescription: (state, action) => {
       const { title, description } = action.payload;
 
-      if (!listTitle || !listDescription) return;
+      if (!state.title || !state.description) return;
 
-      if (listTitle !== title) {
-        listTitle = title;
+      if (state.title !== title) {
+        state.title = title;
       }
 
-      if (listDescription !== description) {
-        listDescription = description;
+      if (state.description !== description) {
+        state.description = description;
       }
     },
-    updateBackgroundColor: ({ backgroundColor: listBackgroundColor  }, action: PayloadAction<string>) => {
+    updateBackgroundColor: (state, action: PayloadAction<string>) => {
       const { payload: newColor } = action;
 
-      if (!listBackgroundColor) return;
+      if (!state.backgroundColor || !newColor) return;
 
-      if (listBackgroundColor !== newColor) {
-        listBackgroundColor = newColor;
+      if (state.backgroundColor !== newColor) {
+        state.backgroundColor = newColor;
       }
     },
     updateListIcons: (
-      { iconSet: listIconSet, items: listItems },
+      state,
       action: PayloadAction<{
         columnContentType: keyof typeof COLUMN_CONTENT_MAP;
         dropColumnIndex: number;
@@ -93,9 +89,8 @@ const listSlice = createSlice({
       const { columnContentType, dropColumnIndex } = payload;
       const columnContent = COLUMN_CONTENT_MAP[columnContentType];
 
-
-      listIconSet = columnContent.type;
-      listItems = listItems.map((listItem, index) => {
+      state.iconSet = columnContent.type;
+      state.items = state.items.map((listItem, index) => {
         return {
           ...listItem,
           rankingAsset: Array.isArray(columnContent.iconGroup?.[index])
@@ -104,13 +99,29 @@ const listSlice = createSlice({
         };
       });
     },
-    updateImageArrangement: ({ imageArrangement: listImageArrangement }, action: PayloadAction<string>) => {
+    updateImageArrangement: (state, action: PayloadAction<string>) => {
       const newArrangement = action.payload;
 
-      if (!listImageArrangement) return;
+      if (!state.imageArrangement) return;
 
-      if (listImageArrangement !== newArrangement) {
-        listImageArrangement = newArrangement;
+      if (state.imageArrangement !== newArrangement) {
+        state.imageArrangement = newArrangement;
+      }
+    },
+    handleModalOpen: (state, action: PayloadAction<boolean>) => {
+      const { payload: isOpen } = action;
+      state.modalOpen = isOpen;
+    },
+    handleItemModalOpen: (state, action: PayloadAction<boolean>) => {
+      const { payload: isOpen } = action;
+      state.itemModalOpen = isOpen;
+    },
+    setSelectedItem: (state, action: PayloadAction<ListItem | null>) => {
+      const { payload: selectedItem } = action;
+      if (selectedItem) {
+        state.itemModalOpen = true;
+        console.log("Selected item:", selectedItem);
+        state.currentlySelectedItem = selectedItem;
       }
     },
   },
@@ -121,6 +132,9 @@ export const {
   updateTitleAndDescription,
   updateBackgroundColor,
   updateImageArrangement,
+  handleModalOpen,
+  handleItemModalOpen,
   setList,
+  setSelectedItem,
 } = listSlice.actions;
 export default listSlice.reducer;

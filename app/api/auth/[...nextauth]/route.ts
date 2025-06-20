@@ -37,8 +37,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect({ baseUrl, url }: { baseUrl: string; url: string }) {
-      // Redirect to editor with userId (this only works if user is already signed in)
-      return 'http://localhost:3000' + '/redirecting'; // Temporary route that will redirect with session
+      return 'http://localhost:3000' + '/redirecting';
     },
   },
 };

@@ -2,17 +2,19 @@ import React from "react";
 import { Container, Title, Text, Box } from "@mantine/core";
 import Card from "./Card";
 import ListGenerateAction from "./ListGenerateAction";
-import { useSelector } from "react-redux";
-import { ListItem } from "../../lib/listSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { ListItem, setSelectedItem } from "../../lib/listSlice";
 
 const NewList: React.FC = () => {
+  const dispatch = useDispatch();
   const backgroundColor = useSelector(
-    (state: { list: { backgroundColor: string } }) => state.list?.backgroundColor
+    (state: { list: { backgroundColor: string } }) =>
+      state.list?.backgroundColor
   );
   const title = useSelector((state: any) => state.list?.title);
   const description = useSelector((state: any) => state.list?.description);
   const listItems = useSelector(
-    (state: { list: { items: ListItem[] }  }) => state.list?.items
+    (state: { list: { items: ListItem[] } }) => state.list?.items
   );
 
   const defaultBackgroundColor = "transparent";
@@ -41,7 +43,7 @@ const NewList: React.FC = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "15vh",
+          height: "10vh",
         }}
       >
         <Title>{title}</Title>
@@ -59,8 +61,8 @@ const NewList: React.FC = () => {
         }}
       >
         {listItems &&
-          listItems.map(
-            ({
+          listItems.map((item) => {
+            const {
               headline,
               subHeadline,
               starRating,
@@ -68,7 +70,8 @@ const NewList: React.FC = () => {
               rankingAsset,
               imageUrl,
               id,
-            }) => (
+            } = item;
+            return (
               <Card
                 headline={headline}
                 subHeadline={subHeadline}
@@ -77,9 +80,10 @@ const NewList: React.FC = () => {
                 rankingAsset={rankingAsset}
                 imageUrl={imageUrl}
                 key={id}
+                onSelect={() => dispatch(setSelectedItem(item))}
               />
-            )
-          )}
+            );
+          })}
       </ul>
     </Container>
   );

@@ -7,6 +7,7 @@ import {
   Overlay,
   AspectRatio,
   Flex,
+  UnstyledButton,
 } from "@mantine/core";
 import styles from "../styles.module.css";
 import { ICON_MAP } from "@/app/utils/constants";
@@ -20,6 +21,7 @@ interface CardProps {
   description: string;
   rankingAsset?: string;
   imageUrl?: string;
+  onSelect?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -29,6 +31,7 @@ const Card: React.FC<CardProps> = ({
   description,
   rankingAsset,
   imageUrl,
+  onSelect,
 }) => {
   const IconComponent = ICON_MAP[rankingAsset as keyof typeof ICON_MAP] || null;
 
@@ -47,72 +50,77 @@ const Card: React.FC<CardProps> = ({
   };
 
   const imageArrangement = useSelector(
-    (state: { list: { imageArrangement: string } }) => state.list?.imageArrangement
+    (state: { list: { imageArrangement: string } }) =>
+      state.list?.imageArrangement
   );
 
   return (
-    <li className={styles.listContainer}>
-      <Box
-        style={{
-          width: `${imageArrangement === "fullWidthImage" ? "100%" : "250px"}`,
-          height: "141px",
-          overflow: "hidden",
-        }}
-      >
-        <AspectRatio ratio={16 / 9} mx="auto" pos="relative">
-          {imageUrl && (
-            <BackgroundImage
-              src={imageUrl}
-              p="xs"
-              style={{
-                height: "100%",
-                width: "100%",
-                backgroundPosition: "center",
-              }}
-            >
-              <Overlay
-                p="sm"
-                gradient="linear-gradient(145deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 100%)"
-                opacity={0.85}
-                zIndex="0"
+    <UnstyledButton onClick={onSelect}>
+      <li className={styles.listContainer}>
+        <Box
+          style={{
+            width: `${
+              imageArrangement === "fullWidthImage" ? "100%" : "250px"
+            }`,
+            height: "141px",
+            overflow: "hidden",
+          }}
+        >
+          <AspectRatio ratio={16 / 9} mx="auto" pos="relative">
+            {imageUrl && (
+              <BackgroundImage
+                src={imageUrl}
+                p="xs"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  backgroundPosition: "center",
+                }}
               >
-                {imageArrangement === "fullWidthImage" ? (
-                  <Flex>
+                <Overlay
+                  p="sm"
+                  gradient="linear-gradient(145deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 100%)"
+                  opacity={0.85}
+                  zIndex="0"
+                >
+                  {imageArrangement === "fullWidthImage" ? (
+                    <Flex>
+                      <IconComponent
+                        color="var(--mantine-color-dark-0)"
+                        size={25}
+                      />
+                      <Box mt="sm" mx="lg">
+                        <Title order={4}>{headline}</Title>
+                        <Box>{generateStars(Number(starRating))}</Box>
+                        <Text size="sm" c="dimmed">
+                          {subHeadline}
+                        </Text>
+                        <Text size="sm">{description}</Text>
+                      </Box>
+                    </Flex>
+                  ) : (
                     <IconComponent
                       color="var(--mantine-color-dark-0)"
                       size={25}
                     />
-                    <Box mt="sm" mx="lg">
-                      <Title order={4}>{headline}</Title>
-                      <Box>{generateStars(Number(starRating))}</Box>
-                      <Text size="sm" c="dimmed">
-                        {subHeadline}
-                      </Text>
-                      <Text size="sm">{description}</Text>
-                    </Box>
-                  </Flex>
-                ) : (
-                  <IconComponent
-                    color="var(--mantine-color-dark-0)"
-                    size={25}
-                  />
-                )}
-              </Overlay>
-            </BackgroundImage>
-          )}
-        </AspectRatio>
-      </Box>
-      {imageArrangement === "leftAlignedImage" && (
-        <Box m="lg">
-          <Title order={4}>{headline}</Title>
-          <Box>{generateStars(Number(starRating))}</Box>
-          <Text size="sm" c="dimmed">
-            {subHeadline}
-          </Text>
-          <Text size="sm">{description}</Text>
+                  )}
+                </Overlay>
+              </BackgroundImage>
+            )}
+          </AspectRatio>
         </Box>
-      )}
-    </li>
+        {imageArrangement === "leftAlignedImage" && (
+          <Box m="lg">
+            <Title order={4}>{headline}</Title>
+            <Box>{generateStars(Number(starRating))}</Box>
+            <Text size="sm" c="dimmed">
+              {subHeadline}
+            </Text>
+            <Text size="sm">{description}</Text>
+          </Box>
+        )}
+      </li>
+    </UnstyledButton>
   );
 };
 

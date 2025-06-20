@@ -1,10 +1,16 @@
 import React from "react";
-import { ActionIcon } from "@mantine/core";
-import {
-  IconTableShare,
-} from "@tabler/icons-react";
+import { ActionIcon, Tooltip } from "@mantine/core";
+import { useSelector, useDispatch } from "react-redux";
+import { IconTableShare, IconEdit } from "@tabler/icons-react";
+import TitleAndDescriptionModal from "./modals/TitleAndDescription";
+import { handleModalOpen } from "@/lib/listSlice";
 
 const ListGenerateAction: React.FC = ({}) => {
+  const dispatch = useDispatch();
+  const modalIsOpen = useSelector(
+    (state: { list: { modalOpen: boolean } }) => state.list?.modalOpen
+  );
+
   const generate = async () => {
     const res = await fetch("/api/screenshot?url=http:localhost:3000");
     const blob = await res.blob();
@@ -21,9 +27,35 @@ const ListGenerateAction: React.FC = ({}) => {
   };
 
   return (
-    <ActionIcon pos="absolute" right="20px" top="20px" onClick={generate} size={42} variant="default" aria-label="Share list">
-      <IconTableShare size={24} />
-    </ActionIcon>
+    <>
+      <TitleAndDescriptionModal
+        opened={modalIsOpen}
+        onClose={() => dispatch(handleModalOpen(false))}
+      />
+      <ActionIcon.Group mt="lg">
+        <Tooltip label="Generate list" position="top" withArrow>
+          <ActionIcon
+            onClick={generate}
+            variant="default"
+            size="lg"
+            aria-label="Generate list"
+          >
+            <IconTableShare size={20} />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label="Edit title and description" position="top" withArrow>
+          <ActionIcon
+            onClick={() => dispatch(handleModalOpen(true))}
+            variant="default"
+            size="lg"
+            aria-label="Edit title and description"
+          >
+            <IconEdit size={20} />
+          </ActionIcon>
+        </Tooltip>
+      </ActionIcon.Group>
+    </>
   );
 };
 

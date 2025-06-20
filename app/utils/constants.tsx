@@ -174,10 +174,6 @@ export const CUSTOMIZE_PANEL = [
 
 export const NEW_CUSTOMIZE_PANEL = [
   {
-    value: "title",
-    heading: "Title & Description",
-  },
-  {
     value: "backgroundColor",
     heading: "Background Color",
     colorSwatches: ["transparent", "#009790", "#ffe8d5", "#f08080"],

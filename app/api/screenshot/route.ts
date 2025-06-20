@@ -1,18 +1,42 @@
-import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route"; // your NextAuth config
+import { encode } from "next-auth/jwt";
 import puppeteer from "puppeteer";
+import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const url = searchParams.get("url") || "";
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
+  const { name, email, id: sub } = session.user;
+
+  const token = await encode({
+    token: { 
+      name: name ?? undefined, 
+      email: email ?? undefined, 
+      sub: sub ?? undefined 
+    },
+    secret: process.env.NEXTAUTH_SECRET!,
+  });
 
   let browser;
-
   try {
-    browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-
+    browser = await puppeteer.launch();
     const page = await browser.newPage();
+
+    await page.setCookie({
+      name: "next-auth.session-token",
+      value: token,
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+    });
 
     await page.setViewport({
       width: 1920,
@@ -20,7 +44,7 @@ export async function GET(req: Request) {
       deviceScaleFactor: 2,
     });
 
-    await page.goto(url, { waitUntil: "networkidle2" });
+    await page.goto(`http://localhost:3000/editor/${session.user.id}`, { waitUntil: "networkidle2" });
 
     const containerSelector = "#list-selector";
 
@@ -47,18 +71,18 @@ export async function GET(req: Request) {
       }
     }, containerSelector);
 
-  // Get bounding box of the element
-  const element = await page.$(containerSelector);
-  if (!element) {
-    console.error("Element not found!");
-    await browser.close();
-    return NextResponse.json(
-      { error: "Failed to capture screenshot: element not found" },
-      { status: 500 }
-    );
-  }
+    // Get bounding box of the element
+    const element = await page.$(containerSelector);
+    if (!element) {
+      console.error("Element not found!");
+      await browser.close();
+      return NextResponse.json(
+        { error: "Failed to capture screenshot: element not found" },
+        { status: 500 }
+      );
+    }
 
-  const box = await element.boundingBox();
+    const box = await element.boundingBox();
 
     if (!box) {
       console.error("Bounding box is null!");

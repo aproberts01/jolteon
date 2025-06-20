@@ -5,11 +5,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { setList, ListState, ListItem } from "../../lib/listSlice";
 import { Grid, Loader } from "@mantine/core";
 import { sanitizeItems } from "../utils/helpers";
+import ListItemModal from "./modals/ListItemModal";
+import { handleItemModalOpen } from "@/lib/listSlice";
 
 const ListView: React.FC<{ listData: ListState[] }> = ({ listData }) => {
   const dispatch = useDispatch();
   const listItems = useSelector(
     (state: { list: { items: ListItem[] } }) => state.list?.items
+  );
+  const itemModalIsOpen = useSelector(
+    (state: { list: { itemModalOpen: boolean } }) => state.list?.itemModalOpen
   );
 
   useEffect(() => {
@@ -29,17 +34,23 @@ const ListView: React.FC<{ listData: ListState[] }> = ({ listData }) => {
   }, [listData, dispatch]);
 
   return (
-    <Grid.Col
-      span={10}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      {listItems && listItems.length > 0 ? <NewList /> : <Loader />}
-    </Grid.Col>
+    <>
+      <ListItemModal
+        onClose={() => dispatch(handleItemModalOpen(false))}
+        opened={itemModalIsOpen}
+      />
+      <Grid.Col
+        span={10}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        {listItems && listItems.length > 0 ? <NewList /> : <Loader />}
+      </Grid.Col>
+    </>
   );
 };
 

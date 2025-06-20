@@ -2,7 +2,6 @@ import React from "react";
 import { NEW_CUSTOMIZE_PANEL, ICON_MAP } from "@/app/utils/constants";
 import { Text, ColorSwatch, Group, SimpleGrid, Flex } from "@mantine/core";
 import DragItem from "./DragItem";
-import TitleAndDescription from "./TitleAndDescription";
 import { useDispatch, useSelector } from "react-redux";
 import { updateListIcons, updateBackgroundColor, updateImageArrangement } from "../../../lib/listSlice";
 
@@ -17,10 +16,12 @@ const NewCustomizeListContent: React.FC = () => {
   const currentIconSet = useSelector(
     (state: { list: { iconSet: string } }) => state.list.iconSet
   );
+
   
   const handleOnClick = (event: React.DragEvent<HTMLDivElement>) => {
     const { currentTarget, dataTransfer } = event;
     const columnContentType = currentTarget.getAttribute("data-column-type");
+
 
     //handle dispatch here
     if (columnContentType) {
@@ -35,8 +36,6 @@ const NewCustomizeListContent: React.FC = () => {
 
   const renderCustomizePanel = (item: any) => {
     switch (item.value) {
-      case "title":
-        return <TitleAndDescription />;
       case "backgroundColor":
         return (
           <Group my="xs">
@@ -123,7 +122,7 @@ const NewCustomizeListContent: React.FC = () => {
       {NEW_CUSTOMIZE_PANEL.map((item) => {
         return (
           <React.Fragment key={item.value}>
-            <Text fw={500} size="sm">
+            <Text my="sm" fw={500} size="sm">
               {item.value === "title" ? null : item.heading}
             </Text>
             {renderCustomizePanel(item)}
