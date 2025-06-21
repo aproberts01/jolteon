@@ -1,5 +1,5 @@
 "use client";
-import { use, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Modal,
   TextInput,
@@ -14,6 +14,10 @@ import { IconUpload } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { ListItem } from "@/lib/listSlice";
 
+type Errors = {
+  [key: string]: { message: string };
+};
+
 export default function ListItemModal({
   opened,
   onClose,
@@ -21,6 +25,8 @@ export default function ListItemModal({
   opened: boolean;
   onClose: () => void;
 }) {
+  const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const selectedItem = useSelector(
     (state: { list: { currentlySelectedItem: ListItem } }) =>
       state.list.currentlySelectedItem
@@ -29,47 +35,150 @@ export default function ListItemModal({
     (state: { list: { id: string } }) => state.list.id
   );
 
-  const { headline, subHeadline, description, imageUrl, starRating, id: itemId } =
-    selectedItem || {};
+  const {
+    headline,
+    subHeadline,
+    description,
+    imageUrl,
+    id: itemId,
+  } = selectedItem || {};
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [inputValues, setInputValues] = useState<{
+    headline: string;
+    subHeadline: string;
+    description: string;
+    imageUrl?: string;
+    errors: Errors;
+  }>({
+    headline: "",
+    subHeadline: "",
+    description: "",
+    imageUrl: "",
+    errors: {},
+  });
+  const [saveLoading, setSaveLoading] = useState(false);
+
+  useEffect(() => {
+    if (selectedItem) {
+      setInputValues((prev) => ({
+        ...prev,
+        headline: headline || "",
+        subHeadline: subHeadline || "",
+        description: description || "",
+        imageUrl: imageUrl || "",
+      }));
+    }
+  }, [selectedItem]);
+
+  const buildUpdatePayload = () => {
+    const fieldsToCompare = ["headline", "subHeadline", "description"];
+
+    const diff: Record<string, any> = {};
+
+    fieldsToCompare.forEach((key) => {
+      const current = inputValues[key as keyof typeof inputValues];
+      const original = selectedItem?.[key as keyof typeof selectedItem];
+
+      if (current !== original) {
+        diff[key] = current;
+      }
+    });
+
+    if (selectedItem?.id) {
+      diff.itemId = selectedItem.id;
+    }
+
+    return diff;
+  };
+
+  const handleItemUpdate = async () => {
     try {
-      const file = e.target.files?.[0];
-      if (!file) return;
+      let payload = buildUpdatePayload();
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
 
-      const formData = new FormData();
-      formData.append("file", file);
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
 
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+        if (!uploadRes.ok) {
+          throw new Error("Failed to upload image");
+        }
 
-      if (!uploadRes.ok) {
-        throw new Error("Failed to upload image");
+        const imageData = await uploadRes.json();
+        payload.imageUrl = imageData.imageUrl;
       }
 
-      const { imageUrl } = await uploadRes.json();
+      console.log(payload, "<-- what is payload?")
 
       const patchRes = await fetch(`/api/lists/${listId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ imageUrl, itemId }),
+        body: JSON.stringify(payload),
       });
 
       if (!patchRes.ok) {
-        throw new Error("Failed to update list imageUrl");
+        throw new Error("Failed to update list item");
       }
 
       const updatedList = await patchRes.json();
-      
+      setSaveLoading(false);
+      onClose();
       return updatedList;
     } catch (err) {
       console.error("Upload or update failed:", err);
       throw err;
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (selected) {
+      setFile(selected);
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(selected);
+    }
+  };
+
+  const handleOnChange = (event: React.SyntheticEvent): void => {
+    const { value, name } = event.target as HTMLInputElement;
+    setInputValues({
+      ...inputValues,
+      [name]: value,
+      errors: { ...inputValues.errors, [name]: { message: "" } },
+    });
+  };
+
+  const handleSave = (event: React.SyntheticEvent): void => {
+    const errors: Errors = {};
+    event.preventDefault();
+    setSaveLoading(true);
+
+    Object.entries(inputValues).forEach(([key, value]) => {
+      if (typeof value === "string") {
+        if (!value) {
+          errors[key] = { message: `${key} is required` };
+        }
+      }
+    });
+
+    const noErrors = Object.keys(errors).length === 0;
+
+    if (!noErrors) {
+      setInputValues({ ...inputValues, errors });
+    } else {
+      handleItemUpdate();
+    }
+  };
+
+  const isInvalid = (prop: string) => {
+    const { errors } = inputValues;
+    return Object.keys(errors).includes(prop);
   };
 
   return (
@@ -89,8 +198,13 @@ export default function ListItemModal({
           overflow: "hidden",
         }}
       >
-        {imageUrl ? (
-          <Image src={imageUrl} alt="Preview" height={200} fit="cover" />
+        {preview || inputValues.imageUrl ? (
+          <Image
+            src={preview || inputValues.imageUrl}
+            alt="Preview"
+            height={200}
+            fit="cover"
+          />
         ) : (
           <Box
             h={200}
@@ -115,7 +229,7 @@ export default function ListItemModal({
               type="file"
               accept="image/*"
               style={{ display: "none" }}
-              onChange={handleImageUpload}
+              onChange={handleFileChange}
             />
           </label>
         </Overlay>
@@ -123,33 +237,43 @@ export default function ListItemModal({
       <TextInput
         label="Headline"
         placeholder="Enter headline"
-        value={headline}
-        onChange={(e) => {}}
+        value={inputValues.headline}
+        onChange={handleOnChange}
         mb="md"
+        error={isInvalid("headline") ? inputValues.errors?.title?.message : ""}
+        name="headline"
       />
       <TextInput
         label="Subheadline"
         placeholder="Enter subheadline"
-        value={subHeadline}
-        onChange={(e) => {}}
+        value={inputValues.subHeadline}
+        onChange={handleOnChange}
         mb="md"
+        name="subHeadline"
+        error={
+          isInvalid("subHeadline")
+            ? inputValues.errors?.subHeadline?.message
+            : ""
+        }
       />
       <Textarea
         label="Description"
         placeholder="Enter description"
-        value={description}
-        onChange={(e) => {}}
+        value={inputValues.description}
+        onChange={handleOnChange}
+        name="description"
         mb="md"
+        error={
+          isInvalid("description")
+            ? inputValues.errors?.description?.message
+            : ""
+        }
       />
       <Group justify="right">
         <Button onClick={onClose} variant="default">
           Cancel
         </Button>
-        <Button
-          onClick={() =>
-            console.log({ headline, subHeadline, description, imageUrl })
-          }
-        >
+        <Button loading={saveLoading} onClick={handleSave}>
           Save
         </Button>
       </Group>
