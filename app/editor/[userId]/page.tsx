@@ -9,6 +9,7 @@ import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import Nav from "../../components/navigation/Nav";
 import Providers from "../../providers";
+import { transpileModule } from "typescript";
 interface Props {
   params: { userId: string };
 }
@@ -24,7 +25,38 @@ export default async function Editor({ params }: Props) {
   try {
     user = await prisma.user.findUnique({
       where: { id: userId },
-      include: { lists: { include: { items: true } } },
+      select: {
+        id: true,
+        name: true,
+        lists: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            backgroundColor: true,
+            imageArrangement: true,
+            iconSet: true,
+            owner: true,
+            updatedAt: true,
+            createdAt: true,
+            items: {
+              orderBy: { position: 'asc' },
+              select: {
+                id: true,
+                headline: true,
+                subHeadline: true,
+                description: true,
+                imageUrl: true,
+                starRating: true,
+                rankingAsset: true,
+                position: true,
+                updatedAt: true,
+                listId: true,
+              },
+            },
+          },
+        },
+      },
     });
   } catch (error) {
     console.error("Error fetching user data:", error);

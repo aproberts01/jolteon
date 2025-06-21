@@ -1,39 +1,72 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { prisma } from "../../../../prisma";
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: Request,
+  paramsPromise: Promise<{ id: string }>
+) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const listId = params.id;
-  const { title, description } = await req.json();
+  const { id: listId } = await paramsPromise;
+
+  if (!session?.user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const body = await req.json();
+  const { itemId, ...updateFields } = body;
+
+  if (Object.keys(updateFields).length === 0) {
+    return new Response("No data provided to update", { status: 400 });
+  }
 
   try {
-    const existingList = await prisma.list.findUnique({
-      where: {
-        id: listId,
-      },
+    if (itemId) {
+      const item = await prisma.listItem.findUnique({
+        where: { id: itemId },
+        include: { list: true },
+      });
+
+      if (
+        !item ||
+        item.id !== itemId ||
+        item.list.owner !== session.user.id
+      ) {
+        return new Response("Forbidden", { status: 403 });
+      }
+
+      const updatedItem = await prisma.listItem.update({
+        where: { id: itemId },
+        data: updateFields,
+      });
+
+      return new Response(JSON.stringify(updatedItem), { status: 200 });
+    }
+
+    const list = await prisma.list.findUnique({
+      where: { id: listId },
     });
 
-    if (!existingList || existingList.owner !== session.user.id) {
-      return NextResponse.json({ error: 'Not found or unauthorized' }, { status: 403 });
+    if (!list || list.owner !== session.user.id) {
+      return new Response("Forbidden", { status: 403 });
     }
 
     const updatedList = await prisma.list.update({
       where: { id: listId },
-      data: {
-        title,
-        description,
-      },
+      data: updateFields,
     });
 
     return NextResponse.json(updatedList);
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

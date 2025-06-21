@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { use, useState } from "react";
 import {
   Modal,
   TextInput,
@@ -11,8 +11,8 @@ import {
   Overlay,
 } from "@mantine/core";
 import { IconUpload } from "@tabler/icons-react";
-import { useSelector, useDispatch } from "react-redux";
-import { updateTitleAndDescription, ListItem } from "@/lib/listSlice";
+import { useSelector } from "react-redux";
+import { ListItem } from "@/lib/listSlice";
 
 export default function ListItemModal({
   opened,
@@ -25,17 +25,50 @@ export default function ListItemModal({
     (state: { list: { currentlySelectedItem: ListItem } }) =>
       state.list.currentlySelectedItem
   );
+  const listId = useSelector(
+    (state: { list: { id: string } }) => state.list.id
+  );
 
-  const { headline, subHeadline, description, imageUrl, starRating } = selectedItem || {}
+  const { headline, subHeadline, description, imageUrl, starRating, id: itemId } =
+    selectedItem || {};
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        //set url here
-      };
-      reader.readAsDataURL(file);
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadRes.ok) {
+        throw new Error("Failed to upload image");
+      }
+
+      const { imageUrl } = await uploadRes.json();
+
+      const patchRes = await fetch(`/api/lists/${listId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageUrl, itemId }),
+      });
+
+      if (!patchRes.ok) {
+        throw new Error("Failed to update list imageUrl");
+      }
+
+      const updatedList = await patchRes.json();
+      
+      return updatedList;
+    } catch (err) {
+      console.error("Upload or update failed:", err);
+      throw err;
     }
   };
 
