@@ -19,8 +19,8 @@ interface CardProps {
   subHeadline: string;
   starRating: string;
   description: string;
-  rankingAsset?: string;
   imageUrl?: string;
+  icon: keyof typeof ICON_MAP;
   onSelect?: () => void;
 }
 
@@ -29,11 +29,11 @@ const Card: React.FC<CardProps> = ({
   subHeadline,
   starRating,
   description,
-  rankingAsset,
+  icon,
   imageUrl,
   onSelect,
 }) => {
-  const IconComponent = ICON_MAP[rankingAsset as keyof typeof ICON_MAP] || null;
+  const IconComponent = ICON_MAP[icon] || null;
 
   const generateStars = (rating: number) => {
     const filledStar = ICON_MAP.IconStarFilled;
@@ -91,18 +91,22 @@ const Card: React.FC<CardProps> = ({
                       />
                       <Box mt="sm" mx="lg">
                         <Title order={4}>{headline}</Title>
-                        <Box>{generateStars(Number(starRating))}</Box>
                         <Text size="sm" c="dimmed">
                           {subHeadline}
                         </Text>
+                        <Box>{generateStars(Number(starRating))}</Box>
                         <Text size="sm">{description}</Text>
                       </Box>
                     </Flex>
                   ) : (
-                    <IconComponent
-                      color="var(--mantine-color-dark-0)"
-                      size={25}
-                    />
+                    <>
+                      {IconComponent && (
+                        <IconComponent
+                          color="var(--mantine-color-dark-0)"
+                          size={25}
+                        />
+                      )}
+                    </>
                   )}
                 </Overlay>
               </BackgroundImage>
@@ -112,10 +116,10 @@ const Card: React.FC<CardProps> = ({
         {imageArrangement === "leftAlignedImage" && (
           <Box m="lg">
             <Title order={4}>{headline}</Title>
-            <Box>{generateStars(Number(starRating))}</Box>
             <Text size="sm" c="dimmed">
               {subHeadline}
             </Text>
+            <Box>{generateStars(Number(starRating))}</Box>
             <Text size="sm">{description}</Text>
           </Box>
         )}

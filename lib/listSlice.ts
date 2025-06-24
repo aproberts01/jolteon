@@ -7,9 +7,10 @@ export interface ListItem {
   headline: string;
   subHeadline: string;
   description: string;
-  rankingAsset: string;
+  rankingAsset: string | string[];
   imageUrl: string;
   updatedAt: Date | null;
+  position: number;
 }
 
 export interface ListState {
@@ -78,24 +79,35 @@ const listSlice = createSlice({
         state.backgroundColor = newColor;
       }
     },
-    updateListIcons: (
+    updateListItems: (
       state,
       action: PayloadAction<{
-        columnContentType: keyof typeof COLUMN_CONTENT_MAP;
-        dropColumnIndex: number;
+        property: string;
+        value: string | null;
       }>
     ) => {
       const { payload } = action;
-      const { columnContentType, dropColumnIndex } = payload;
-      const columnContent = COLUMN_CONTENT_MAP[columnContentType];
+      const { property, value } = payload;
 
-      state.iconSet = columnContent.type;
+      if (property === "iconSet") {
+        const columnContent =
+          COLUMN_CONTENT_MAP[value as keyof typeof COLUMN_CONTENT_MAP];
+
+        state.iconSet = columnContent.type;
+        state.items = state.items.map((listItem, index) => {
+          return {
+            ...listItem,
+            iconSet: value,
+            rankingAsset: (columnContent.iconGroup?.[listItem.position] ??
+              columnContent.iconGroup?.[index]) as string,
+          };
+        });
+      }
+
       state.items = state.items.map((listItem, index) => {
         return {
           ...listItem,
-          rankingAsset: Array.isArray(columnContent.iconGroup?.[index])
-            ? columnContent.iconGroup[index].join(", ")
-            : columnContent.iconGroup?.[index] || "",
+          [property]: value,
         };
       });
     },
@@ -128,7 +140,7 @@ const listSlice = createSlice({
 });
 
 export const {
-  updateListIcons,
+  updateListItems,
   updateTitleAndDescription,
   updateBackgroundColor,
   updateImageArrangement,

@@ -111,8 +111,6 @@ export default function ListItemModal({
         payload.imageUrl = imageData.imageUrl;
       }
 
-      console.log(payload, "<-- what is payload?")
-
       const patchRes = await fetch(`/api/lists/${listId}`, {
         method: "PATCH",
         headers: {

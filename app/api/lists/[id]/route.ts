@@ -5,14 +5,12 @@ import { prisma } from "../../../../prisma";
 
 export async function PATCH(
   req: Request,
-  paramsPromise: Promise<{ id: string }>
+  contextPromise: Promise<{ params: { id: string } }>
 ) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { params } = await contextPromise;
+  const { id: listId } = await params;
 
-  const { id: listId } = await paramsPromise;
+  const session = await getServerSession(authOptions);
 
   if (!session?.user) {
     return new Response("Unauthorized", { status: 401 });

@@ -5,7 +5,7 @@ import { IconGripVertical, IconPhoto } from "@tabler/icons-react";
 import styles from "./NavigationStyles.module.css";
 
 interface DragItemProps {
-  onClick: (event: React.DragEvent<HTMLDivElement>) => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   dataColumnType: string;
   contentType: string;
   isActive: boolean;
@@ -26,6 +26,7 @@ const DragItem: React.FC<DragItemProps> = ({
   return (
     <Paper
       data-column-type={dataColumnType}
+      component="button"
       onClick={onClick}
       className={styles.paperStyles}
       shadow="xs"

@@ -3,21 +3,29 @@ import { Container, Title, Text, Box } from "@mantine/core";
 import Card from "./Card";
 import ListGenerateAction from "./ListGenerateAction";
 import { useSelector, useDispatch } from "react-redux";
-import { ListItem, setSelectedItem } from "../../lib/listSlice";
+import { createSelector } from "@reduxjs/toolkit";
+import { setSelectedItem } from "../../lib/listSlice";
+import { COLUMN_CONTENT_MAP, ICON_MAP } from "@/app/utils/constants";
+import { RootState } from "@/lib/store";
 
 const NewList: React.FC = () => {
   const dispatch = useDispatch();
-  const backgroundColor = useSelector(
-    (state: { list: { backgroundColor: string } }) =>
-      state.list?.backgroundColor
-  );
-  const title = useSelector((state: any) => state.list?.title);
-  const description = useSelector((state: any) => state.list?.description);
-  const listItems = useSelector(
-    (state: { list: { items: ListItem[] } }) => state.list?.items
-  );
+  const selectList = (state: RootState) => state.list;
 
+  const selectListProps = createSelector([selectList], (list) => ({
+    title: list.title,
+    description: list.description,
+    iconSet: list.iconSet,
+    backgroundColor: list.backgroundColor,
+    listItems: list.items,
+  }));
+  const { title, description, iconSet, backgroundColor, listItems } =
+    useSelector(selectListProps);
+
+  const columnContent =
+    COLUMN_CONTENT_MAP[iconSet as keyof typeof COLUMN_CONTENT_MAP];
   const defaultBackgroundColor = "transparent";
+
   return (
     <Container
       fluid
@@ -61,23 +69,26 @@ const NewList: React.FC = () => {
         }}
       >
         {listItems &&
-          listItems.map((item) => {
+          listItems.map((item, index) => {
             const {
               headline,
               subHeadline,
               starRating,
               description,
-              rankingAsset,
               imageUrl,
               id,
+              position,
             } = item;
             return (
               <Card
+                icon={
+                  (columnContent?.iconGroup?.[position - 1] ||
+                    columnContent?.iconGroup?.[index]) as keyof typeof ICON_MAP
+                }
                 headline={headline}
                 subHeadline={subHeadline}
                 starRating={starRating}
                 description={description}
-                rankingAsset={rankingAsset}
                 imageUrl={imageUrl}
                 key={id}
                 onSelect={() => dispatch(setSelectedItem(item))}
