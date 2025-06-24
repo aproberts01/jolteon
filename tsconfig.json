@@ -18,8 +18,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@lib/*": ["lib/*"],
+      "@components/*": ["app/components/*"],
+      "@prisma/*": ["prisma/*"],
+      "@generated/prisma": ["generated/prisma/*"],
+      "@api/*": ["app/api/*"],
+      "@auth/*": ["app/api/auth/*"],
+      "@providers": ["app/providers"]
     },
     "plugins": [
       {

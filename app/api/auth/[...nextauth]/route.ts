@@ -1,7 +1,7 @@
 import NextAuth, { AuthOptions, DefaultSession, NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { prisma } from "../../../../prisma"
+import { prisma } from "@/prisma"
 
 export const runtime = 'nodejs';
 

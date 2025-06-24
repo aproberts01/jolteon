@@ -8,7 +8,7 @@ import {
   updateListItems,
   updateBackgroundColor,
   updateImageArrangement,
-} from "../../../lib/listSlice";
+} from "@/lib/listSlice";
 import { RootState } from "@/lib/store";
 
 const NewCustomizeListContent: React.FC = () => {

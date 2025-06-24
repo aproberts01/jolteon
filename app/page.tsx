@@ -2,7 +2,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Button, Container, Text, Title, Avatar, Group } from "@mantine/core";
 import classes from "./styles.module.css";
-import { GoogleButton } from "./components/GoogleButton";
+import { GoogleButton } from "@components/GoogleButton";
 import { IconBrandGithub } from "@tabler/icons-react";
 
 export default function HomePage() {

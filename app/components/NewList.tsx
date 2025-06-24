@@ -4,7 +4,7 @@ import Card from "./Card";
 import ListGenerateAction from "./ListGenerateAction";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "@reduxjs/toolkit";
-import { setSelectedItem } from "../../lib/listSlice";
+import { setSelectedItem } from "@/lib/listSlice";
 import { COLUMN_CONTENT_MAP, ICON_MAP } from "@/app/utils/constants";
 import { RootState } from "@/lib/store";
 

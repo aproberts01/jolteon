@@ -1,15 +1,15 @@
 import { Grid, Loader } from "@mantine/core";
 import { notFound } from "next/navigation";
-import { prisma } from "../../../prisma";
+import { prisma } from "@/prisma";
 
-import ListView from "../../components/ListView";
+import ListView from "@components/ListView";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
+import { authOptions } from "@api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import Nav from "../../components/navigation/Nav";
-import Providers from "../../providers";
-import { transpileModule } from "typescript";
+import Nav from "@components/navigation/Nav";
+import Providers from "@providers";
+
 interface Props {
   params: { userId: string };
 }
@@ -40,7 +40,7 @@ export default async function Editor({ params }: Props) {
             updatedAt: true,
             createdAt: true,
             items: {
-              orderBy: { position: 'asc' },
+              orderBy: { position: "asc" },
               select: {
                 id: true,
                 headline: true,

@@ -1,4 +1,4 @@
-import { ListItem } from "../../lib/listSlice";
+import { ListItem } from "@/lib/listSlice";
 
 type SanitizedListItem = Omit<ListItem, "updatedAt"> & {
   updatedAt: string | null;

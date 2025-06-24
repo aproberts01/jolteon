@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route"; // your NextAuth config
+import { authOptions } from "@auth/[...nextauth]/route"; // your NextAuth config
 import { encode } from "next-auth/jwt";
 import puppeteer from "puppeteer";
 import { NextResponse } from "next/server";

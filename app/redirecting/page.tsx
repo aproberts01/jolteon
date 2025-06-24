@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@api/auth/[...nextauth]/route";
 
 // Extend the Session type to include user.id
 declare module "next-auth" {

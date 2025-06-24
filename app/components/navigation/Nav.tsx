@@ -1,13 +1,13 @@
 'use client';
 import React from "react";
 import { Avatar, Badge, Group, Grid, Tabs } from "@mantine/core";
-import TabsList from "../../components/navigation/TabsList";
+import TabsList from "@components/navigation/TabsList";
 import classes from "../../styles.module.css";
 import { IconEdit, IconListNumbers } from "@tabler/icons-react";
-import MyListsContent from "../../components/navigation/MyListsContent";
-import NewCustomizeListContent from "../../components/navigation/NewCustomizeListContent";
+import MyListsContent from "@components/navigation/MyListsContent";
+import NewCustomizeListContent from "@components/navigation/NewCustomizeListContent";
 import { MY_LISTS_DATA } from "../../utils/mockData";
-import { UserButton } from "../../components/UserButton";
+import { UserButton } from "@components/UserButton";
 import { signOut } from "next-auth/react";
 
 interface NavProps {

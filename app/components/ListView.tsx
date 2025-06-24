@@ -2,11 +2,15 @@
 import React, { Suspense, useEffect } from "react";
 import NewList from "./NewList";
 import { useSelector, useDispatch } from "react-redux";
-import { setList, ListState, ListItem } from "../../lib/listSlice";
 import { Grid, Loader } from "@mantine/core";
 import { sanitizeItems } from "../utils/helpers";
 import ListItemModal from "./modals/ListItemModal";
-import { handleItemModalOpen } from "@/lib/listSlice";
+import {
+  handleItemModalOpen,
+  setList,
+  ListState,
+  ListItem,
+} from "@/lib/listSlice";
 
 const ListView: React.FC<{ listData: ListState[] }> = ({ listData }) => {
   const dispatch = useDispatch();
