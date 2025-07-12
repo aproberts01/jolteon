@@ -59,10 +59,10 @@ const Card: React.FC<CardProps> = ({
       <li className={styles.listContainer}>
         <Box
           style={{
-            width: `${
+            minWidth: `${
               imageArrangement === "fullWidthImage" ? "100%" : "250px"
             }`,
-            height: "141px",
+            maxHeight: "141px",
             overflow: "hidden",
           }}
         >
@@ -74,7 +74,7 @@ const Card: React.FC<CardProps> = ({
                 style={{
                   height: "100%",
                   width: "100%",
-                  backgroundPosition: "center",
+                  backgroundPosition: "50% 20%",
                 }}
               >
                 <Overlay
@@ -90,12 +90,12 @@ const Card: React.FC<CardProps> = ({
                         size={25}
                       />
                       <Box mt="sm" mx="lg">
-                        <Title order={4}>{headline}</Title>
-                        <Text size="sm" c="dimmed">
+                        <Title lineClamp={1} order={4}>{headline}</Title>
+                        <Text size="xs" c="dimmed">
                           {subHeadline}
                         </Text>
                         <Box>{generateStars(Number(starRating))}</Box>
-                        <Text size="sm">{description}</Text>
+                        <Text truncate="end" size="sm">{description}</Text>
                       </Box>
                     </Flex>
                   ) : (
@@ -115,12 +115,12 @@ const Card: React.FC<CardProps> = ({
         </Box>
         {imageArrangement === "leftAlignedImage" && (
           <Box m="lg">
-            <Title order={4}>{headline}</Title>
-            <Text size="sm" c="dimmed">
+            <Title lineClamp={1} order={4}>{headline}</Title>
+            <Text size="xs" c="dimmed">
               {subHeadline}
             </Text>
             <Box>{generateStars(Number(starRating))}</Box>
-            <Text size="sm">{description}</Text>
+            <Text lineClamp={2} size="sm">{description}</Text>
           </Box>
         )}
       </li>

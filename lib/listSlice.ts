@@ -81,35 +81,40 @@ const listSlice = createSlice({
     },
     updateListItems: (
       state,
-      action: PayloadAction<{
-        property: string;
-        value: string | null;
-      }>
+      action: PayloadAction<Record<string, string | null>>
     ) => {
-      const { payload } = action;
-      const { property, value } = payload;
-
-      if (property === "iconSet") {
+      const updates = action.payload;
+      if ("iconSet" in updates) {
+        const value = updates.iconSet;
         const columnContent =
           COLUMN_CONTENT_MAP[value as keyof typeof COLUMN_CONTENT_MAP];
 
         state.iconSet = columnContent.type;
+
         state.items = state.items.map((listItem, index) => {
           return {
             ...listItem,
             iconSet: value,
             rankingAsset: (columnContent.iconGroup?.[listItem.position] ??
               columnContent.iconGroup?.[index]) as string,
+            ...Object.fromEntries(
+              Object.entries(updates).filter(([key]) => key !== "iconSet")
+            ),
+          };
+        });
+      } else {
+        state.items = state.items.map((listItem) => {
+          if (listItem.id === state.currentlySelectedItem?.id) {
+            return {
+              ...listItem,
+              ...updates,
+            };
+          }
+          return {
+            ...listItem,
           };
         });
       }
-
-      state.items = state.items.map((listItem, index) => {
-        return {
-          ...listItem,
-          [property]: value,
-        };
-      });
     },
     updateImageArrangement: (state, action: PayloadAction<string>) => {
       const newArrangement = action.payload;
@@ -132,7 +137,6 @@ const listSlice = createSlice({
       const { payload: selectedItem } = action;
       if (selectedItem) {
         state.itemModalOpen = true;
-        console.log("Selected item:", selectedItem);
         state.currentlySelectedItem = selectedItem;
       }
     },

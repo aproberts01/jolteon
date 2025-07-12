@@ -11,8 +11,9 @@ import {
   Overlay,
 } from "@mantine/core";
 import { IconUpload } from "@tabler/icons-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ListItem } from "@/lib/listSlice";
+import { updateListItems } from "@/lib/listSlice";
 
 type Errors = {
   [key: string]: { message: string };
@@ -25,6 +26,7 @@ export default function ListItemModal({
   opened: boolean;
   onClose: () => void;
 }) {
+  const dispatch = useDispatch();
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const selectedItem = useSelector(
@@ -125,6 +127,7 @@ export default function ListItemModal({
 
       const updatedList = await patchRes.json();
       setSaveLoading(false);
+      dispatch(updateListItems(updatedList));
       onClose();
       return updatedList;
     } catch (err) {

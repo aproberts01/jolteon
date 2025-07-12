@@ -74,6 +74,7 @@
   background-color: var(--mantine-color-dark-8);
   overflow: hidden;
   display: flex;
+  max-height: 141px;
 }
 
 .root {

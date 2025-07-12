@@ -39,8 +39,7 @@ const NewCustomizeListContent: React.FC = () => {
     try {
       dispatch(
         updateListItems({
-          property: "iconSet",
-          value: iconSet,
+          iconSet
         })
       );
 
@@ -59,8 +58,7 @@ const NewCustomizeListContent: React.FC = () => {
       if (updated.iconSet !== iconSet) {
         dispatch(
           updateListItems({
-            property: "iconSet",
-            value: updated.iconSet,
+            iconSet: updated.iconSet,
           })
         );
       }
@@ -68,8 +66,7 @@ const NewCustomizeListContent: React.FC = () => {
       console.error("Error updating list item icon set:", error);
       dispatch(
         updateListItems({
-          property: "iconSet",
-          value: prevIconSet,
+          iconSet: prevIconSet,
         })
       );
     }
@@ -106,11 +103,8 @@ const NewCustomizeListContent: React.FC = () => {
     }
   };
 
-  const handleUpdateBackgroundColor = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    const { currentTarget } = event;
-    const backgroundColor = currentTarget.getAttribute("data-column-type");
+  const handleUpdateBackgroundColor = async (color: string) => {
+    const backgroundColor = color;
     const prevBackgroundColor = currentColor;
 
     try {
@@ -147,7 +141,7 @@ const NewCustomizeListContent: React.FC = () => {
                 component="button"
                 key={`${index}_swatch`}
                 color={color}
-                onClick={handleUpdateBackgroundColor}
+                onClick={() => handleUpdateBackgroundColor(color)}
                 style={{
                   cursor: "pointer",
                   border:
